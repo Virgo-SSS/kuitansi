@@ -3,37 +3,42 @@ services:
   app:
     build:
       args:
-        user: virgo
+        user: test
         uid: 1000
       context: ./
       dockerfile: Dockerfile
-    image: php:8.2-fpm-composer
-    container_name: kuitansi-php
+    image: php:8.2-fpm-with-composer
+    container_name: test-php
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
       - ./:/var/www
+    depends_on:
+      - mysql
       
   nginx:
     image: nginx:alpine
-    container_name: kuitansi-nginx
+    container_name: test-nginx
     restart: unless-stopped
     ports:
       - "8000:80"
     volumes:
       - ./:/var/www
-      - ./docker-config/ngingx/default.conf:/etc/nginx/conf.d
+      - ./docker-config/nginx:/etc/nginx/conf.d
+      - ./storage/logs/nginx:/var/log/nginx/
+    depends_on:
+      - app
 
   mysql:
-    container_name: kuitans-mysql
-    image: mysql
+    container_name: test-mysql
+    image: mysql:latest
     ports:
       - "3306:3306"
     # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
     # (this is just an example, not intended to be a production configuration)
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: test
     volumes:
-      - D:\Data\mysql:/var/lib/mysql
+      - ../../../mysql:/var/lib/mysql
