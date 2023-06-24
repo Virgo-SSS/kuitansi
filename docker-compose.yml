@@ -1,14 +1,8 @@
 version: "3.8"
 services:
   app:
-    build:
-      args:
-        user: test
-        uid: 1000
-      context: ./
-      dockerfile: Dockerfile
-    image: php:8.2-fpm-with-composer
-    container_name: test-php
+    image: php-laravel:8.2
+    container_name: kuitansi-app
     restart: unless-stopped
     working_dir: /var/www/
     ports:
@@ -16,14 +10,9 @@ services:
     volumes:
       - ./:/var/www
     networks:
-      - nginx
       - database
 
 networks:
-  nginx:
-    external:
-      name: nginx
   database:
     external :
       name: mysql-development
-    
