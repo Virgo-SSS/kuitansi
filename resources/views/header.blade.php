@@ -156,7 +156,10 @@
                 </a>
               </li>
               <li class="flex">
-                <a
+                <form action="{{ route('logout') }}" method="POST" id="logout_form">
+                  @csrf
+                </form>
+                <a onclick="$('#logout_form').submit(); console.log('clicked')"
                   class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                   href="#"
                 >
