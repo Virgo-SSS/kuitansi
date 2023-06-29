@@ -21,9 +21,10 @@ class AuthenticationTest extends TestCase
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
         $user = User::factory()->create();
-
+        
+        $field = config('fortify.username');
         $response = $this->post('/login', [
-            'email' => $user->email,
+            $field => $user->$field,
             'password' => 'password',
         ]);
 
@@ -35,8 +36,9 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $field = config('fortify.username');
         $this->post('/login', [
-            'email' => $user->email,
+            $field => $user->$field,
             'password' => 'wrong-password',
         ]);
 

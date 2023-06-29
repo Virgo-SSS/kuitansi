@@ -11,11 +11,11 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/tailwind.output.css'])
-        
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"/>
+        
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/tailwind.output.css'])
     </head>
     <body class="font-sans antialiased">
         <x-banner />
@@ -30,7 +30,10 @@
                 </main>
             </div>
         </div>
+
         @stack('modals')
+        
+        @livewireScripts
         <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer ></script>
         <script src="{{ asset('assets/js/charts-lines.js') }}" defer></script>
