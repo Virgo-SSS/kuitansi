@@ -7,36 +7,28 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Styles -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"/>
+        @include('layouts.app_styles')
         
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/tailwind.output.css'])
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/tailwind.output.css', 'resources/js/event.js'])
     </head>
     <body class="font-sans antialiased">
-        <x-banner />
         <!-- Page Content -->
         <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
             <x-desktop-sidebar></x-desktop-sidebar>
             <x-mobile-sidebar></x-mobile-sidebar>
             <div class="flex flex-col flex-1 w-full">
-                <main class="h-full overflow-y-auto">
-                    <x-header></x-header>
-                    {{ $slot }}
+                <x-header></x-header>
+                <main class="h-full pb-16 overflow-y-auto">
+                    <div class="container px-6 mx-auto grid">
+                        {{ $slot }}
+                    </div>
                 </main>
             </div>
         </div>
 
         @stack('modals')
-        
         @livewireScripts
-        <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer ></script>
-        <script src="{{ asset('assets/js/charts-lines.js') }}" defer></script>
-        <script src="{{ asset('assets/js/charts-pie.js') }}" defer></script>
+        @include('layouts.app_scripts')
     </body>
 </html>

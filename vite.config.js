@@ -8,6 +8,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/css/tailwind.output.css',
+                'resources/js/event.js',
             ],
             refresh: [
                 ...refreshPaths,
@@ -15,9 +16,4 @@ export default defineConfig({
             ],
         }),
     ],
-    resolve: {
-        alias: {
-            '$': 'jQuery'
-        },
-    },
 });
