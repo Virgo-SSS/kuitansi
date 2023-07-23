@@ -21,6 +21,6 @@ class MobileSidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('mobile-sidebar');
+        return view('layouts.partials.mobile-sidebar');
     }
 }

@@ -16,12 +16,14 @@ class CreateReceiptForm extends Component
         'received_from' => null,
         'amount' => null,
         'in_payment_for' => null,
+        'payment_method' => null,
     ];
 
     public array $rules = [
         'state.received_from' => 'required|string|max:255',
         'state.amount' => 'required|numeric|min:0',
         'state.in_payment_for' => 'required|string|max:255',
+        'state.payment_method' => 'required|string|in:cash,transfer,giro',
     ];
 
     public array $messages = [
@@ -34,6 +36,9 @@ class CreateReceiptForm extends Component
         'state.in_payment_for.required' => 'The in payment for field is required.',
         'state.in_payment_for.string' => 'The in payment for field must be a string.',
         'state.in_payment_for.max' => 'The in payment for field must not exceed 255 characters.',
+        'state.payment_method.required' => 'The payment method field is required.',
+        'state.payment_method.string' => 'The payment method field must be a string.',
+        'state.payment_method.in' => 'The selected payment method is invalid.',
     ];
 
     public function store(CreateReceipt $action): void
@@ -54,6 +59,7 @@ class CreateReceiptForm extends Component
             'received_from' => null,
             'amount' => null,
             'in_payment_for' => null,
+            'payment_method' => null,
         ];
     }
 

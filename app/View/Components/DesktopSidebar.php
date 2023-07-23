@@ -21,6 +21,6 @@ class DesktopSidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('desktop-sidebar');
+        return view('layouts.partials.desktop-sidebar');
     }
 }

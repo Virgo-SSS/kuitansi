@@ -49,7 +49,6 @@ class CreateReceiptest extends TestCase
         $this->assertDatabaseHas('receipts', $state);
     }
 
-
     /**
      * @dataProvider validationDataProvider
      */
@@ -76,6 +75,9 @@ class CreateReceiptest extends TestCase
             'in_payment_for_required' => ['', 'in_payment_for', 'required'],
             'in_payment_for_string' => [123, 'in_payment_for', 'string'],
             'in_payment_for_max' => [Str::random(256), 'in_payment_for', 'max'],
+            'payment_method_required' => ['', 'payment_method', 'required'],
+            'payment_method_string' => [123, 'payment_method', 'string'],
+            'payment_method_in' => ['abc', 'payment_method', 'in'],
         ];
     }
 }

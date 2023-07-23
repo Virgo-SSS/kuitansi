@@ -21,15 +21,8 @@ class ReceiptFactory extends Factory
             'received_from' => $this->faker->name,
             'amount' => $this->faker->randomNumber(2),
             'in_payment_for' => $this->faker->sentence,
+            'payment_method' => $this->faker->randomElement(['cash', 'transfer', 'giro']),
+            'created_by' => User::factory(),
         ];
-    }
-
-    public function addUserId(): Factory
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'user_id' => User::factory(),
-            ];
-        });
     }
 }

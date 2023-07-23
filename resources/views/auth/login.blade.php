@@ -17,12 +17,12 @@
 
             <div>
                 <x-label for="uuid" value="{{ __('UUID') }}" />
-                <x-input id="uuid" class="block mt-1 w-full" type="text" name="uuid" :value="old('uuid')" required autofocus autocomplete="uuid" />
+                <x-inputs.default id="uuid" class="block mt-1 w-full" type="text" name="uuid" :value="old('uuid')" required autofocus autocomplete="uuid" />
             </div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+                <x-inputs.default id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
@@ -32,7 +32,7 @@
                     </a>
                 @endif
 
-                <x-button class="ml-4">
+                <x-buttons.submit class="ml-4">
                     {{ __('Log in') }}
                 </x-button>
             </div>
