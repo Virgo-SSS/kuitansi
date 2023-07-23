@@ -19,6 +19,7 @@ class Receipt extends Model
         'amount',
         'in_payment_for',
         'payment_method',
+        'giro_bank',
         'created_by',
     ];
 
@@ -29,15 +30,8 @@ class Receipt extends Model
 
     public function amount(): Attribute
     {
-        return new Attribute(function ($value) {
-           get: return number_format($value, 0, ',', '.');
-        });
-    }
-
-    public function paymentMethod(): Attribute
-    {
-        return new Attribute(function ($value) {
-            get: return $value !== null ? Str::upper($value) : 'N/A';
-        });
+        return Attribute::make(
+           get: fn (string $value) => number_format($value, 0, ',', '.'),
+        );
     }
 }

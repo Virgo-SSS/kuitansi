@@ -17,12 +17,18 @@ class ReceiptFactory extends Factory
      */
     public function definition(): array
     {
+        $payment_method = $this->faker->randomElement(['CASH', 'TRANSFER', 'GIRO']);
+        $giro_bank = $payment_method === 'giro' ? $this->faker->randomElement(['BNI', 'BRI', 'BCA']) : null;
+
         return [
             'received_from' => $this->faker->name,
             'amount' => $this->faker->randomNumber(2),
             'in_payment_for' => $this->faker->sentence,
-            'payment_method' => $this->faker->randomElement(['cash', 'transfer', 'giro']),
+            'payment_method' => $payment_method,
+            'giro_bank' => $giro_bank,
             'created_by' => User::factory(),
         ];
     }
+
+
 }

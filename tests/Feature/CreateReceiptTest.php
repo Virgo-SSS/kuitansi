@@ -12,9 +12,9 @@ use Livewire\Livewire;
 use Livewire\Testing\TestableLivewire;
 use Tests\TestCase;
 
-class CreateReceiptest extends TestCase
+class CreateReceiptTest extends TestCase
 {
-    use RefreshDatabase;
+     use RefreshDatabase;
 
     private function liveWireTest(array $state): TestableLivewire
     {
@@ -42,28 +42,34 @@ class CreateReceiptest extends TestCase
     public function test_authorized_user_can_create_receipt(): void
     {
         $this->actingAs($user = User::factory()->create());
-        $state = Receipt::factory()->make()->toArray();
+        $state = Receipt::factory()->make([
+            'created_by' => $user->id,
+        ])->toArray();
 
         $this->liveWireTest($state);
 
-        $this->assertDatabaseHas('receipts', $state);
+         $this->assertDatabaseHas('receipts', $state);
     }
 
     /**
      * @dataProvider validationDataProvider
      */
-    public function test_create_recipt_validation(string|int $value, string $field, string $validation): void
+    public function test_create_receipt_validation(string|int $value, string $field, string $validation): void
     {
         $this->actingAs($user = User::factory()->create());
 
         $state = Receipt::factory()->make()->toArray();
+        if($field === 'giro_bank' && $validation === 'required_if') {
+            $state['payment_method'] = 'GIRO';
+        }
+
         $state[$field] = $value;
 
         $this->liveWireTest($state)
             ->assertHasErrors(['state.'.$field => $validation]);
     }
 
-    protected static function validationDataProvider(): array
+    public static function validationDataProvider(): array
     {
         return [
             'received_from_required' => ['', 'received_from', 'required'],
@@ -77,7 +83,11 @@ class CreateReceiptest extends TestCase
             'in_payment_for_max' => [Str::random(256), 'in_payment_for', 'max'],
             'payment_method_required' => ['', 'payment_method', 'required'],
             'payment_method_string' => [123, 'payment_method', 'string'],
+            'payment_method_uppercase' => ['giro', 'payment_method', 'uppercase'],
             'payment_method_in' => ['abc', 'payment_method', 'in'],
+            'giro_bank_required' => ['', 'giro_bank', 'required_if'],
+            'giro_bank_string' => [123, 'giro_bank', 'string'],
+            'giro_bank_max' => [Str::random(256), 'giro_bank', 'max'],
         ];
     }
 }

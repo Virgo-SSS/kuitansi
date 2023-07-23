@@ -13,6 +13,7 @@ class CreateReceipt
             'amount' => $request['amount'],
             'in_payment_for' => $request['in_payment_for'],
             'payment_method' => $request['payment_method'],
+            'giro_bank' => $request['giro_bank'],
             'created_by' => auth()->user()->id,
         ]);
     }

@@ -1,4 +1,4 @@
-<div class="w-full overflow-hidden rounded-lg shadow-xs">    
+<div class="w-full overflow-hidden rounded-lg shadow-xs">
     <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
             <thead>
@@ -32,7 +32,7 @@
                             {{ $receipt->in_payment_for }}
                         </td>
                         <td class="px-2 py-2 text-sm">
-                            {{ $receipt->payment_method }}
+                            {{ $receipt->payment_method }} {{ $receipt->giro_bank ? ' - ' . $receipt->giro_bank : '' }}
                         </td>
                         <td class="px-2 py-2 text-sm">
                             {{ $receipt->created_by_user->name }}

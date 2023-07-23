@@ -35,20 +35,31 @@
                     <x-span>Payment Method</x-span>
                     <x-errors.default for="state.payment_method" />
                     <span class="mr-3">
-                        <x-inputs.radio wire:model="state.payment_method" id="cash" value="cash"/>
+                        <x-inputs.radio wire:model="state.payment_method" id="cash" value="CASH" wire:click="setGiroBankDiv(false)"/>
                         <label for="cash" class="ml-2 dark:text-gray-400">Cash</label>
                     </span>
                     <span class="mr-3">
-                        <x-inputs.radio wire:model="state.payment_method" id="transfer" value="transfer"/>
+                        <x-inputs.radio wire:model="state.payment_method" id="transfer" value="TRANSFER" wire:click="setGiroBankDiv(false)"/>
                         <label for="transfer" class="ml-2 dark:text-gray-400">Via Transfer</label>
                     </span>
                     <span class="mr-3">
-                        <x-inputs.radio wire:model="state.payment_method" id="giro" value="giro"/>
+                        <x-inputs.radio wire:model="state.payment_method" id="giro" value="GIRO" wire:click="setGiroBankDiv(true)"/>
                         <label for="giro" class="ml-2 dark:text-gray-400">Giro</label>
                     </span>
                 </label>
             </div>
         </div>
+        @if($giroBankDiv)
+            <div class="grid grid-cols-1 gap-6">
+                <div>
+                    <label class="block mt-4 text-sm">
+                        <x-span>Giro Bank</x-span>
+                        <x-errors.default for="state.giro_bank" />
+                        <x-inputs.default wire:model="state.giro_bank" type="text" id="giro_bank" placeholder="Enter Giro/Bilyet Bank" required/>
+                    </label>
+                </div>
+            </div>
+        @endif
         <div class="grid grid-cols-1 gap-6">
             <div>
                 <label class="block mt-4 text-sm">
