@@ -21,4 +21,6 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session')])->group(fu
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/receipt/create', [ReceiptController::class, 'create'])->name('receipt.create');
+    Route::post('/receipt', [ReceiptController::class, 'store'])->name('receipt.store');
+    Route::get('/receipt/{receipt}', [ReceiptController::class, 'edit'])->name('receipt.edit');
 });

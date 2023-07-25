@@ -39,7 +39,9 @@
                         </td>
                         <td>
                             <div>
-                                <x-buttons.small-button>Edit</x-buttons.small-button>
+                                <a href="{{ route('receipt.edit', $receipt->id) }}">
+                                    <x-buttons.small-button>Edit</x-buttons.small-button>
+                                </a>
                             </div>
                         </td>
                     </tr>

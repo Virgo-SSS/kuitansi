@@ -18,7 +18,7 @@ class ReceiptFactory extends Factory
     public function definition(): array
     {
         $payment_method = $this->faker->randomElement(['CASH', 'TRANSFER', 'GIRO']);
-        $giro_bank = $payment_method === 'giro' ? $this->faker->randomElement(['BNI', 'BRI', 'BCA']) : null;
+        $giro_bank = $payment_method == 'GIRO' ? $this->faker->randomElement(['BNI', 'BRI', 'BCA']) : null;
 
         return [
             'received_from' => $this->faker->name,

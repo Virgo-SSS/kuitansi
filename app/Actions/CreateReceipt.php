@@ -6,7 +6,7 @@ use App\Models\Receipt;
 
 class CreateReceipt
 {
-    public function create(array $request): void
+    public function handle(array $request): void
     {
         Receipt::create([
             'received_from' => $request['received_from'],

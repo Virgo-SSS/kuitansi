@@ -2,13 +2,12 @@
 
 namespace App\Http\Livewire\receipt;
 
-use App\Actions\CreateReceipt;
+use App\Models\Receipt;
 use App\Trait\ToastTrait;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class CreateReceiptForm extends Component
+class EditReceiptForm extends Component
 {
     use ToastTrait;
 
@@ -48,37 +47,18 @@ class CreateReceiptForm extends Component
 
     public bool $giroBankDiv = false;
 
-    public function store(CreateReceipt $action): void
+    public function mount(Receipt $receipt): void
     {
-        $this->prepareStateForValidation();
-        $this->validate();
-
-        $action->create($this->state);
-
-        $this->resetState();
-
-        $this->toastSuccess('Receipt created successfully!');
-    }
-
-    protected function resetState(): void
-    {
-        $this->state = [
-            'received_from' => null,
-            'amount' => null,
-            'in_payment_for' => null,
-            'payment_method' => null,
-            'giro_bank' => null,
-        ];
+        $this->state['received_from']   = $receipt->received_from;
+        $this->state['amount']          = $receipt->amount;
+        $this->state['in_payment_for']  = $receipt->in_payment_for;
+        $this->state['payment_method']  = $receipt->payment_method;
+        $this->state['giro_bank']       = $receipt->giro_bank;
     }
 
     public function render(): View
     {
-        return view('receipt.create-receipt-form');
-    }
-
-    public function prepareStateForValidation(): void
-    {
-        $this->state['amount'] = Str::replace([',', '.'], '', $this->state['amount']);
+        return view('receipt.edit-receipt-form');
     }
 
     public function setGiroBankDiv(bool $status): void
