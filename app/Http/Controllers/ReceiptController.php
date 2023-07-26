@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\CreateReceipt;
+use App\Actions\UpdateReceipt;
 use App\Http\Requests\CreateReceiptRequest;
 use App\Models\Receipt;
 use Illuminate\Http\RedirectResponse;
@@ -25,5 +26,12 @@ class ReceiptController extends Controller
     public function edit(Receipt $receipt): View
     {
         return view('receipt.edit', compact('receipt'));
+    }
+
+    public function update(CreateReceiptRequest $request, Receipt $receipt, UpdateReceipt $actions): RedirectResponse
+    {
+        $actions->handle($request->validated(), $receipt);
+
+        return redirect()->back()->with('success', 'Receipt updated successfully');
     }
 }
