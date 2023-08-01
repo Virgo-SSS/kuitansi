@@ -74,7 +74,7 @@
             </div>
         </div>
 
-        <x-buttons.submit>{{ __('Save') }}</x-buttons.submit>
+        <x-buttons.submit class="bg-blue-500 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900">{{ __('Save') }}</x-buttons.submit>
     </form>
 
     <x-slot name="scripts">
