@@ -50,7 +50,7 @@
                                     </x-buttons.small-button>
                                 </a>
 
-                                <x-buttons.small-button wire:click="setModelToDelete({{ $receipt->id }})"  @click="openModal"  class="bg-red-500 hover:bg-red-700 focus:bg-red-700 active:bg-red-900">
+                                <x-buttons.small-button wire:click="setModelToDelete({{ $receipt->id }})"  @click="openModal"  class="!bg-red-500 !hover:bg-red-700 !focus:bg-red-700 !active:bg-red-900">
                                     <svg
                                         class="w-5 h-5"
                                         aria-hidden="true"

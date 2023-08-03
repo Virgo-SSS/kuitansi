@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,8 +21,15 @@ Route::get('/', fn() => redirect()->route('login'));
 Route::middleware([ 'auth:sanctum', config('jetstream.auth_session')])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/receipt/create', [ReceiptController::class, 'create'])->name('receipt.create');
-    Route::post('/receipt', [ReceiptController::class, 'store'])->name('receipt.store');
-    Route::get('/receipt/{receipt}', [ReceiptController::class, 'edit'])->name('receipt.edit');
-    Route::put('/receipt/{receipt}', [ReceiptController::class, 'update'])->name('receipt.update');
+    Route::controller(ReceiptController::class)->prefix('receipt')->group(function () {
+        Route::get('/create','create')->name('receipt.create');
+        Route::post('/','store')->name('receipt.store');
+        Route::get('/{receipt}','edit')->name('receipt.edit');
+        Route::put('/{receipt}','update')->name('receipt.update');
+    });
+
+    Route::controller(UserController::class)->prefix('user')->group(function () {
+        Route::get('/create', 'create')->name('user.create');
+        Route::post('/', 'store')->name('user.store');
+    });
 });
