@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('receipts', function (Blueprint $table) {
-            $table->string('payment_method')->nullable()->after('in_payment_for');
+        Schema::create('receipt_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -21,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('receipt_categories');
     }
 };

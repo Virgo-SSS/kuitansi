@@ -47,6 +47,10 @@ function data() {
     togglePagesMenu() {
       this.isPagesMenuOpen = !this.isPagesMenuOpen
     },
+    isRolesPermissionMenuOpen: false,
+      toggleRolesPermissionMenu() {
+          this.isRolesPermissionMenuOpen = !this.isRolesPermissionMenuOpen
+    },
     // Modal
     isModalOpen: false,
     trapCleanup: null,

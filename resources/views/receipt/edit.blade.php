@@ -11,7 +11,7 @@
                 <div>
                     <label class="block text-sm">
                         <x-span>Received From</x-span>
-                        <x-errors.default for="state.received_from" />
+                        <x-errors.default for="received_from" />
                         <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
                             <x-inputs.default id="received_from" name="received_from" value="{{ $receipt->received_from }}" type="text" placeholder="Received From" required class="pl-10 text-black"/>
                             <div class="absolute inset-y-0 flex items-center ml-3 pointer-events-none">
@@ -25,7 +25,7 @@
                 <div>
                     <label class="block text-sm">
                         <x-span>Amount</x-span>
-                        <x-errors.default for="state.amount" />
+                        <x-errors.default for="amount" />
                         <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
                             <x-inputs.default id="amount" name="amount" value="{{ $receipt->amount }}" type="text" placeholder="Input The Amount" required class="pl-10 text-black"/>
                             <div class="absolute inset-y-0 flex items-center ml-3 pointer-events-none">
@@ -59,7 +59,7 @@
                 <div>
                     <label class="block mt-4 text-sm">
                         <x-span>Giro Bank</x-span>
-                        <x-errors.default for="state.giro_bank" />
+                        <x-errors.default for="giro_bank" />
                         <x-inputs.default name="giro_bank" id="giro_bank" value="{{ $receipt->giro_bank }}" type="text" placeholder="Enter Giro/Bilyet Bank" required/>
                     </label>
                 </div>
@@ -68,7 +68,7 @@
                 <div>
                     <label class="block mt-4 text-sm">
                         <x-span>In Payment Of</x-span>
-                        <x-errors.default for="state.in_payment_for" />
+                        <x-errors.default for="in_payment_for" />
                         <x-inputs.text-area name="in_payment_for" placeholder="Enter description of payment" required>{{ $receipt->in_payment_for }}</x-inputs.text-area>
                     </label>
                 </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => redirect()->route('login'));
 
-Route::middleware([ 'auth:sanctum', config('jetstream.auth_session')])->group(function () {
+Route::middleware([ 'auth', config('jetstream.auth_session')])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::controller(ReceiptController::class)->prefix('receipt')->group(function () {
@@ -31,5 +32,13 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session')])->group(fu
     Route::controller(UserController::class)->prefix('user')->group(function () {
         Route::get('/create', 'create')->name('user.create');
         Route::post('/', 'store')->name('user.store');
+    });
+
+    Route::controller(RolePermissionController::class)->prefix('role')->group(function () {
+        Route::get('/', 'index')->name('role.index');
+        Route::get('/create', 'create')->name('role.create');
+        Route::post('/', 'store')->name('role.store');
+        Route::get('/{role}/edit', 'edit')->name('role.edit');
+        Route::put('/{role}', 'update')->name('role.update');
     });
 });

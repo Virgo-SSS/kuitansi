@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('receipts', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('received_from');
-            $table->string('amount');
-            $table->string('in_payment_for');
-            $table->foreignId('created_by')->constrained('users');
+            $table->string('name');
+            $table->string('block');
+            $table->integer('number');
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('receipt');
+        Schema::dropIfExists('projects');
     }
 };

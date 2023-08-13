@@ -49,7 +49,7 @@
                         </span>
                         <span class="mr-3">
                             <x-inputs.radio name="payment_method" id="giro" value="GIRO" onclick="giroBankDiv(true)"/>
-                            <label for="giro" class="ml-2 dark:text-gray-400">Giro</label>
+                            <label for="giro" class="ml-2 dark:text-gray-400">Cek/Giro</label>
                         </span>
                     </label>
                 </div>
