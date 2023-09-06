@@ -72,7 +72,7 @@ class CreateRolePermissionTest extends TestCase
         ])->assertSessionHasErrors($session_error_field ?? $field, $error_message);
     }
 
-    public function CreateRoleValidation(): array
+    public static function CreateRoleValidation(): array
     {
         return [
             'name is required' => ['name', '', 'The role name field is required.'],

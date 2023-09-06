@@ -8,21 +8,34 @@
             @csrf
             <!-- Role Name Input -->
             <div class="mb-4">
-                <x-errors.default for="name"/>
+                @error('name')
+                    <x-message.error>{{ $message }}</x-message.error>
+                @enderror
+
                 <x-label for="name">Role : </x-label>
-                <x-inputs.default type="text" id="name"  name="name" placeholder="Role Name" required class="pl-10 text-black "/>
+                <x-inputs.text  id="name"  name="name" placeholder="Role Name" required class="text-black "/>
             </div>
 
             <!-- Permissions Input -->
             <div class="mb-4">
-                <x-errors.default for="permissions"/>
+                @error('permissions')
+                    <x-message.error>{{ $message }}</x-message.error>
+                @enderror
                 <x-label for="permission">Permissions</x-label>
-                <div class="grid grid-cols-3 gap-4">
-                    @foreach($permissions as $permission)
-                        <label class="inline-flex items-center">
-                            <x-inputs.checkbox name="permissions[]" id="permission" value="{{ $permission }}"/>
-                            <x-span class="ml-2">{{ $permission }}</x-span>
-                        </label>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <!-- Card 1 -->
+                    @foreach($permissions as $key => $permission)
+                        <div class="bg-white p-4 shadow-md rounded-lg dark:bg-gray-800">
+                            <h2 class="text-lg font-semibold mb-2 dark:text-gray-200">{{ ucfirst($key) }}</h2>
+                            <ul>
+                                @foreach($permission as $value)
+                                    <li class="flex items-center">
+                                        <x-inputs.checkbox name="permissions[]" id="permission" value="{{ $value }}"/>
+                                        <x-span class="ml-2">{{ $value }}</x-span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     @endforeach
                 </div>
             </div>

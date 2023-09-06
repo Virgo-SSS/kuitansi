@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Actions\CreateRolePermission;
+use App\Actions\UpdateRolePermission;
 use App\Http\Requests\CreateRolePermissionRequest;
+use App\Http\Requests\EditRolePermissionRequest;
 use App\Repository\interfaces\RolePermissionRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,7 +31,6 @@ class RolePermissionController extends Controller
         $this->authorize('create role');
 
         $permissions = app(RolePermissionRepositoryInterface::class)->getPermissions();
-
         return view('role-permission.create', compact('permissions'));
     }
 
@@ -46,15 +47,17 @@ class RolePermissionController extends Controller
     {
         $this->authorize('edit role');
 
-        $permissions = Permission::pluck('name');
+        $permissions = app(RolePermissionRepositoryInterface::class)->getPermissions();
+
         return view('role-permission.edit', compact('role', 'permissions'));
     }
 
-    public function update(Request $request, Role $role): RedirectResponse
+    public function update(EditRolePermissionRequest $request, Role $role, UpdateRolePermission $action): RedirectResponse
     {
         $this->authorize('edit role');
 
-        $role->syncPermissions($request->permissions);
+        $action->handle($request->validated(), $role);
+
         return redirect()->route('role.index')->with('success', 'Role updated successfully');
     }
 }

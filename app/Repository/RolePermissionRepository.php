@@ -13,11 +13,12 @@ class RolePermissionRepository implements RolePermissionRepositoryInterface
     public function getPermissions(): Collection
     {
         $permissions = Cache::get(config('permission.cache.key'));
-        if($permissions) {
-            return collect($permissions['permissions'])->pluck(array_search('name', $permissions['alias']));
-        }
 
-        return Permission::pluck('name');
+        return collect($permissions['permissions'])->groupBy(array_search('category', $permissions['alias']))->map(function (Collection $item) use ($permissions) {
+            return $item->map(function (array $item) use ($permissions) {
+                return $item[array_search('name', $permissions['alias'])];
+            });
+        });
     }
 
     public function getRoles(): Collection

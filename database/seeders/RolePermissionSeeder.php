@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -15,25 +16,43 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'view role page',
-            'create role',
-            'edit role',
-            'delete role',
-            'create receipt',
-            'edit receipt',
-            'delete receipt',
-            'view user page',
-            'create user',
-            'edit user',
-            'delete user',
+            'role' => [
+                'view role page',
+                'create role',
+                'edit role',
+                'delete role',
+            ],
+            'receipt' => [
+                'view receipt page',
+                'create receipt',
+                'edit receipt',
+                'delete receipt',
+            ],
+            'user' => [
+                'view user page',
+                'create user',
+                'edit user',
+                'delete user',
+            ],
+            'project' => [
+                'view project page',
+                'create project',
+                'edit project',
+                'delete project',
+            ],
         ];
 
         // Reset cached roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-        foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+        foreach ($permissions as $key => $permission) {
+            foreach ($permission as $value) {
+                Permission::updateOrCreate(
+                    ['name' => $value],
+                    ['category' => $key]
+                );
+            }
         }
 
         // this can be done as separate statements
