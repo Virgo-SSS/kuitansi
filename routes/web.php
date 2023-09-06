@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
@@ -40,5 +41,10 @@ Route::middleware([ 'auth', config('jetstream.auth_session')])->group(function (
         Route::post('/', 'store')->name('role.store');
         Route::get('/{role}/edit', 'edit')->name('role.edit');
         Route::put('/{role}', 'update')->name('role.update');
+    });
+
+    Route::controller(ProjectController::class)->prefix('project')->group(function () {
+        Route::get('/', 'index')->name('project.index');
+        Route::get('/create', 'create')->name('project.create');
     });
 });
