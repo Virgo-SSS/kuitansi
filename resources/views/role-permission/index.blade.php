@@ -9,9 +9,11 @@
             @foreach($roles as $role)
             <li class="bg-white shadow-md rounded-lg px-4 py-4 relative">
                 <!-- Edit Button -->
-                <button class="bg-blue-500 text-white px-2 py-1 rounded-lg absolute top-2 right-2">
-                    Edit
-                </button>
+                <a href="{{ route('role.edit', $role->id) }}">
+                    <button class="bg-blue-500 text-white px-2 py-1 rounded-lg absolute top-2 right-2">
+                        Edit
+                    </button>
+                </a>
 
                 <h3 class="text-lg font-semibold mb-2">{{ $role->name }}</h3>
                 <!-- Permissions List for Administrator role -->

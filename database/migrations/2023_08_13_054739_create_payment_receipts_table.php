@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('payment_for');
             $table->foreignId('project_id')->constrained('projects')->onDelete('cascade');
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
-            $table->foreignId('category_id')->constrained('receipt_categories')->onDelete('cascade');
+            $table->integer('category_id');
             $table->timestamps();
         });
     }

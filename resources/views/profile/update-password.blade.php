@@ -1,4 +1,4 @@
-<x-form-section submit="updatePassword">
+<x-forms.form-section submit="updatePassword">
     <x-slot name="title">
         {{ __('Update Password') }}
     </x-slot>
@@ -28,12 +28,8 @@
     </x-slot>
 
     <x-slot name="actions">
-        <x-action-message class="mr-3" on="saved">
-            {{ __('Saved.') }}
-        </x-action-message>
-
         <x-buttons.submit>
             {{ __('Save') }}
-        </x-button>
+        </x-buttons.submit>
     </x-slot>
-</x-form-section>
+</x-forms.form-section>

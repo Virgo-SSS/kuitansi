@@ -7,9 +7,6 @@ use App\Http\Requests\CreateRolePermissionRequest;
 use App\Repository\interfaces\RolePermissionRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -49,7 +46,7 @@ class RolePermissionController extends Controller
     {
         $this->authorize('edit role');
 
-        $permissions = Permission::all(['name']);
+        $permissions = Permission::pluck('name');
         return view('role-permission.edit', compact('role', 'permissions'));
     }
 

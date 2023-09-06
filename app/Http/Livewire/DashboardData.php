@@ -12,24 +12,21 @@ class DashboardData extends Component
 {
     use WithPagination, ToastTrait;
 
-    public Receipt $receipt;
 
     public function render(): View
     {
-        return view('dashboard.dashboard-data', [
-            'receipts' => Receipt::with(['created_by_user'])->paginate(15),
-        ]);
+        return view('dashboard.dashboard-data');
     }
 
-    public function setModelToDelete(Receipt $receipt): void
-    {
-        $this->receipt = $receipt;
-    }
-
-    public function deleteReceipt(): void
-    {
-        $this->receipt->delete();
-
-        $this->toastSuccess('Receipt deleted successfully');
-    }
+//    public function setModelToDelete(Receipt $receipt): void
+//    {
+//        $this->receipt = $receipt;
+//    }
+//
+//    public function deleteReceipt(): void
+//    {
+//        $this->receipt->delete();
+//
+//        $this->toastSuccess('Receipt deleted successfully');
+//    }
 }
