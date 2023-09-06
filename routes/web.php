@@ -46,5 +46,6 @@ Route::middleware([ 'auth', config('jetstream.auth_session')])->group(function (
     Route::controller(ProjectController::class)->prefix('project')->group(function () {
         Route::get('/', 'index')->name('project.index');
         Route::get('/create', 'create')->name('project.create');
+        Route::post('/', 'store')->name('project.store');
     });
 });
