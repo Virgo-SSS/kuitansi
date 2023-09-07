@@ -8,20 +8,20 @@ use App\Http\Requests\CreateRolePermissionRequest;
 use App\Http\Requests\EditRolePermissionRequest;
 use App\Repository\interfaces\RolePermissionRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RolePermissionController extends Controller
 {
+    public function __construct(
+        private RolePermissionRepositoryInterface $repository
+    ){}
+
     public function index(): View
     {
         $this->authorize('view role page');
 
-        $roles = Role::with('permissions')
-            ->where('name', '!=', 'admin')
-            ->get();
+        $roles = $this->repository->getRoles();
 
         return view('role-permission.index', compact('roles'));
     }
@@ -30,7 +30,7 @@ class RolePermissionController extends Controller
     {
         $this->authorize('create role');
 
-        $permissions = app(RolePermissionRepositoryInterface::class)->getPermissions();
+        $permissions = $this->repository->getPermissions();
         return view('role-permission.create', compact('permissions'));
     }
 
@@ -47,7 +47,7 @@ class RolePermissionController extends Controller
     {
         $this->authorize('edit role');
 
-        $permissions = app(RolePermissionRepositoryInterface::class)->getPermissions();
+        $permissions = $this->repository->getPermissions();
 
         return view('role-permission.edit', compact('role', 'permissions'));
     }
