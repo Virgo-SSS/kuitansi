@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\RolePermission;
 
 use Spatie\Permission\Models\Role;
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CreateRolePermission;
-use App\Actions\UpdateRolePermission;
-use App\Http\Requests\CreateRolePermissionRequest;
-use App\Http\Requests\EditRolePermissionRequest;
+use App\Actions\RolePermission\CreateRolePermission;
+use App\Actions\RolePermission\UpdateRolePermission;
+use App\Http\Requests\RolePermission\CreateRolePermissionRequest;
+use App\Http\Requests\RolePermission\EditRolePermissionRequest;
 use App\Repository\interfaces\RolePermissionRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;

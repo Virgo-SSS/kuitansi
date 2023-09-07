@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\RolePermission;
 
 use App\Models\User;
 use Database\Factories\RoleFactory;
