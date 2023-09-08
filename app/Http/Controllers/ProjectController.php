@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Project\interface\CreateProjectActionInterface;
-use App\Actions\Project\interface\DeleteProjectActionInterface;
-use App\Actions\Project\interface\UpdateProjectActionInterface;
+use App\Actions\Project\Interfaces\CreateProjectActionInterface;
+use App\Actions\Project\Interfaces\DeleteProjectActionInterface;
+use App\Actions\Project\Interfaces\UpdateProjectActionInterface;
 use App\Http\Requests\Project\StoreProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Models\Project;

@@ -2,7 +2,7 @@
 
 namespace App\Actions\Project;
 
-use App\Actions\Project\interface\DeleteProjectActionInterface;
+use App\Actions\Project\Interfaces\DeleteProjectActionInterface;
 use App\Models\Project;
 
 class DeleteProject implements DeleteProjectActionInterface

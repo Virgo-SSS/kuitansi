@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Project\interface;
+namespace App\Actions\Project\Interfaces;
 
 use App\Models\Project;
 

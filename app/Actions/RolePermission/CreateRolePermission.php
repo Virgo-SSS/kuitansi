@@ -2,9 +2,10 @@
 
 namespace App\Actions\RolePermission;
 
+use App\Actions\RolePermission\Interfaces\CreateRolePermissionActionInterface;
 use Spatie\Permission\Models\Role;
 
-class CreateRolePermission
+class CreateRolePermission implements CreateRolePermissionActionInterface
 {
     public function handle(array $data): void
     {

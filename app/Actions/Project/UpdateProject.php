@@ -2,7 +2,7 @@
 
 namespace App\Actions\Project;
 
-use App\Actions\Project\interface\UpdateProjectActionInterface;
+use App\Actions\Project\Interfaces\UpdateProjectActionInterface;
 use App\Models\Project;
 
 class UpdateProject implements UpdateProjectActionInterface

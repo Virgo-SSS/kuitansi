@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\RolePermission\CreateRolePermission;
-use App\Actions\RolePermission\UpdateRolePermission;
+use App\Actions\RolePermission\Interfaces\CreateRolePermissionActionInterface;
+use App\Actions\RolePermission\Interfaces\UpdateRolePermissionActionInterface;
 use App\Http\Requests\RolePermission\CreateRolePermissionRequest;
 use App\Http\Requests\RolePermission\EditRolePermissionRequest;
 use App\Repository\interfaces\RolePermissionRepositoryInterface;
@@ -14,7 +14,7 @@ use Spatie\Permission\Models\Role;
 class RolePermissionController extends Controller
 {
     public function __construct(
-        private RolePermissionRepositoryInterface $repository
+        private readonly RolePermissionRepositoryInterface $repository
     ){}
 
     public function index(): View
@@ -34,7 +34,7 @@ class RolePermissionController extends Controller
         return view('role-permission.create', compact('permissions'));
     }
 
-    public function store(CreateRolePermissionRequest $request, CreateRolePermission $action): RedirectResponse
+    public function store(CreateRolePermissionRequest $request, CreateRolePermissionActionInterface $action): RedirectResponse
     {
         $this->authorize('create role');
 
@@ -52,7 +52,7 @@ class RolePermissionController extends Controller
         return view('role-permission.edit', compact('role', 'permissions'));
     }
 
-    public function update(EditRolePermissionRequest $request, Role $role, UpdateRolePermission $action): RedirectResponse
+    public function update(EditRolePermissionRequest $request, Role $role, UpdateRolePermissionActionInterface $action): RedirectResponse
     {
         $this->authorize('edit role');
 

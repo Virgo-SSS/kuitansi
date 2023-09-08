@@ -2,7 +2,7 @@
 
 namespace App\Actions\Project;
 
-use App\Actions\Project\interface\CreateProjectActionInterface;
+use App\Actions\Project\Interfaces\CreateProjectActionInterface;
 use App\Models\Project;
 
 class CreateProject implements CreateProjectActionInterface
