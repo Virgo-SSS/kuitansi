@@ -47,5 +47,8 @@ Route::middleware([ 'auth', config('jetstream.auth_session')])->group(function (
         Route::get('/', 'index')->name('project.index');
         Route::get('/create', 'create')->name('project.create');
         Route::post('/', 'store')->name('project.store');
+        Route::get('/{project}/edit', 'edit')->name('project.edit');
+        Route::put('/{project}', 'update')->name('project.update');
+        Route::delete('/{project}', 'destroy')->name('project.destroy');
     });
 });
