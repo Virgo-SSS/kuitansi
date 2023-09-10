@@ -35,6 +35,8 @@
                     <span class="ml-4">Create Receipt</span>
                 </a>
             </li>
+
+            @canany(['view role page', 'create role'])
             <li class="relative px-6 py-3">
                 <button
                     class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
@@ -63,22 +65,28 @@
                         x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
                         class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
                         aria-label="submenu">
-
+                        @can('view role page')
                         <li
                             class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                             <a class="w-full" href="{{ route('role.index') }}">
                                 Role
                             </a>
                         </li>
+                        @endcan
+                        @can('create role')
                         <li
                             class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                             <a class="w-full" href="{{ route('role.create') }}">
                                 Create Role
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </template>
             </li>
+            @endcanany
+
+            @can('view project page')
             <li class="relative px-6 py-3">
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                    href="{{ route('project.index') }}">
@@ -91,6 +99,9 @@
                     <span class="ml-4">Project</span>
                 </a>
             </li>
+            @endcan
+
+            @can('view bank page')
             <li class="relative px-6 py-3">
                 <a href="{{ route('bank.index') }}" class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"  >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" stroke-linecap="round" class="w-5 h-5">
@@ -99,6 +110,8 @@
                     <span class="ml-4">Bank</span>
                 </a>
             </li>
+            @endcan
+
             <li class="relative px-6 py-3">
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="cards.html">

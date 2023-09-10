@@ -3,6 +3,7 @@
         Projects
     </h2>
 
+    @can('create project')
     <div class="my-2">
         <a href="{{ route('project.create') }}">
             <x-buttons.small-button>
@@ -10,6 +11,7 @@
             </x-buttons.small-button>
         </a>
     </div>
+    @endcan
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
@@ -45,6 +47,7 @@
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
+                                    @can('edit project')
                                     <a href="{{ route('project.edit', $project->id) }}">
                                         <button
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -56,6 +59,8 @@
                                             </svg>
                                         </button>
                                     </a>
+                                    @endcan
+                                    @can('delete project')
                                     <a onclick="$('#project-{{ $project->id }}').submit()">
                                         <button
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-red-400 focus:outline-none focus:shadow-outline-gray"
@@ -71,6 +76,7 @@
                                         @method('DELETE')
                                         @csrf
                                     </form>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
