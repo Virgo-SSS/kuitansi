@@ -14,6 +14,8 @@ class BankData extends Component
 {
     use ToastTrait, AuthorizesRequests;
 
+    public string $search = '';
+
     protected $listeners = [
         'bankCreated' => '$refresh',
         'bankUpdated' => '$refresh',
@@ -26,6 +28,8 @@ class BankData extends Component
 
     public function render(): View
     {
+        sleep(1);
+
         return view('bank.bank-data', [
             'banks' => $this->getBankData(),
         ]);
@@ -33,7 +37,11 @@ class BankData extends Component
 
     private function getBankData(): Collection
     {
-        return Bank::all();
+        return Bank::query()
+            ->when($this->search, function ($query) {
+                $query->where('name', 'like', "%{$this->search}%");
+            })
+            ->get();
     }
 
     public function deleteBank(Bank $bank, DeleteBankActionInterface $action): void
