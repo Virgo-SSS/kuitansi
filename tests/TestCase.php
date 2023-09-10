@@ -12,13 +12,22 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, RefreshDatabase;
 
-    public function createUser(string $role, ?string $permission = null): User
+    public function createUser(string $role, mixed $permission = null): User
     {
         $role = Role::create(['name' => $role]);
 
         if($permission) {
-            $permission = Permission::create(['name' => $permission]);
-            $role->givePermissionTo($permission->name);
+            if(is_array($permission)) {
+                foreach($permission as $p) {
+                    $permission = Permission::create(['name' => $p]);
+                    $role->givePermissionTo($permission->name);
+                }
+            }
+
+            if(is_string($permission)) {
+                $permission = Permission::create(['name' => $permission]);
+                $role->givePermissionTo($permission->name);
+            }
         }
 
         $user = User::factory()->create();

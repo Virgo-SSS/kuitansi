@@ -29,6 +29,7 @@
 
 @stack('modals')
 @livewireScripts
+@livewire('livewire-ui-modal')
 @include('layouts.partials.app_scripts')
 </body>
 </html>

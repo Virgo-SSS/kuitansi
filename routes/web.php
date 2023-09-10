@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\BankController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
+use App\Http\Livewire\BankData;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,4 +53,6 @@ Route::middleware([ 'auth', config('jetstream.auth_session')])->group(function (
         Route::put('/{project}', 'update')->name('project.update');
         Route::delete('/{project}', 'destroy')->name('project.destroy');
     });
+
+    Route::get('/bank', BankData::class)->name('bank.index');
 });
