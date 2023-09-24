@@ -26,6 +26,10 @@ use App\Actions\Project\Interfaces\DeleteProjectActionInterface;
 use App\Actions\Project\Interfaces\UpdateProjectActionInterface;
 use App\Actions\RolePermission\Interfaces\CreateRolePermissionActionInterface;
 use App\Actions\RolePermission\Interfaces\UpdateRolePermissionActionInterface;
+use App\Actions\User\DeleteUser;
+use App\Actions\User\Interfaces\DeleteUserActionInterface;
+use App\Actions\User\Interfaces\UpdateUserActionInterface;
+use App\Actions\User\UpdateUser;
 use Illuminate\Support\ServiceProvider;
 
 class ActionServiceProvider extends ServiceProvider
@@ -38,19 +42,17 @@ class ActionServiceProvider extends ServiceProvider
         $this->app->bind(CreateProjectActionInterface::class, CreateProject::class);
         $this->app->bind(UpdateProjectActionInterface::class, UpdateProject::class);
         $this->app->bind(DeleteProjectActionInterface::class, DeleteProject::class);
-
         $this->app->bind(CreateRolePermissionActionInterface::class, CreateRolePermission::class);
         $this->app->bind(UpdateRolePermissionActionInterface::class, UpdateRolePermission::class);
-
         $this->app->bind(CreateBankActionInterface::class, CreateBank::class);
         $this->app->bind(EditBankActionInterface::class, EditBank::class);
         $this->app->bind(DeleteBankActionInterface::class, DeleteBank::class);
-
         $this->app->bind(CreatePaymentReceiptActionInterface::class, CreatePaymentReceipt::class);
         $this->app->bind(CreateAcceptanceReceiptActionInterface::class, CreateAcceptanceReceipt::class);
-
         $this->app->bind(EditAcceptanceReceiptActionInterface::class, EditAcceptanceReceipt::class);
         $this->app->bind(EditPaymentReceiptActionInterface::class, EditPaymentReceipt::class);
+        $this->app->bind(UpdateUserActionInterface::class, UpdateUser::class);
+        $this->app->bind(DeleteUserActionInterface::class, DeleteUser::class);
 
     }
 
