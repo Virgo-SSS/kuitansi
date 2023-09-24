@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/css/tailwind.output.css',
                 'resources/js/event.js',
+                'resources/js/currency.js',
             ],
             refresh: [
                 ...refreshPaths,

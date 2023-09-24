@@ -1,122 +1,86 @@
+@php use App\Enums\AcceptancePaymentForCategory;use App\Enums\ReceiptCategory;use App\Enums\ReceiptType; @endphp
 <x-app-layout>
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Edit Receipt
     </h2>
 
-    <form action="{{ route('receipt.update', $receipt->id) }}" method="POST">
-        @method('PUT')
-        @csrf
-        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <div class="grid grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-sm">
-                        <x-span>Received From</x-span>
-                        <x-errors.default for="received_from" />
-                        <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
-                            <x-inputs.default id="received_from" name="received_from" value="{{ $receipt->received_from }}" type="text" placeholder="Received From" required class="pl-10 text-black"/>
-                            <div class="absolute inset-y-0 flex items-center ml-3 pointer-events-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </label>
-                </div>
-                <div>
-                    <label class="block text-sm">
-                        <x-span>Amount</x-span>
-                        <x-errors.default for="amount" />
-                        <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
-                            <x-inputs.default id="amount" name="amount" value="{{ $receipt->amount }}" type="text" placeholder="Input The Amount" required class="pl-10 text-black"/>
-                            <div class="absolute inset-y-0 flex items-center ml-3 pointer-events-none">
-                                Rp.
-                            </div>
-                        </div>
-                    </label>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 gap-6">
-                <div>
-                    <label class="block mt-4 text-sm">
-                        <x-label for="payment_method">Payment Method</x-label>
-                        <x-errors.default for="payment_method" />
-                        <span class="mr-3">
-                            <x-inputs.radio name="payment_method" id="cash" value="CASH" :checked="strtoupper($receipt->payment_method) == 'CASH' ?? false" onclick="giroBankDiv(false)"/>
-                            <label for="cash" class="ml-2 dark:text-gray-400">Cash</label>
-                        </span>
-                        <span class="mr-3">
-                            <x-inputs.radio name="payment_method" id="transfer" value="TRANSFER" :checked="strtoupper($receipt->payment_method) == 'TRANSFER' ?? false "  onclick="giroBankDiv(false)"/>
-                            <label for="transfer" class="ml-2 dark:text-gray-400">Via Transfer</label>
-                        </span>
-                        <span class="mr-3">
-                            <x-inputs.radio name="payment_method" id="giro" value="GIRO" :checked="strtoupper($receipt->payment_method) == 'GIRO' ?? false" onclick="giroBankDiv(true)"/>
-                            <label for="giro" class="ml-2 dark:text-gray-400">Giro</label>
-                        </span>
-                    </label>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 gap-6" style="display: none" id="giroBankDiv">
-                <div>
-                    <label class="block mt-4 text-sm">
-                        <x-span>Giro Bank</x-span>
-                        <x-errors.default for="giro_bank" />
-                        <x-inputs.default name="giro_bank" id="giro_bank" value="{{ $receipt->giro_bank }}" type="text" placeholder="Enter Giro/Bilyet Bank" required/>
-                    </label>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 gap-6">
-                <div>
-                    <label class="block mt-4 text-sm">
-                        <x-span>In Payment Of</x-span>
-                        <x-errors.default for="in_payment_for" />
-                        <x-inputs.text-area name="in_payment_for" placeholder="Enter description of payment" required>{{ $receipt->in_payment_for }}</x-inputs.text-area>
-                    </label>
-                </div>
-            </div>
+    @if($type == ReceiptType::ACCEPTANCE->value)
+        <div id="acceptance-receipt-wrapper">
+            @include('receipt.edit-form.acceptance-receipt-form')
         </div>
+    @endif
 
-        <x-buttons.submit class="bg-blue-500 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900">{{ __('Save') }}</x-buttons.submit>
-    </form>
-
+    @if($type == ReceiptType::PAYMENT->value)
+        <div id="payment-receipt-wrapper">
+            @include('receipt.edit-form.payment-receipt-form')
+        </div>
+    @endif
 
     <x-slot name="scripts">
         <script>
-            $('#amount').on('input', function() {
-                $(this).val(formatRupiah($(this).val()))
-            })
+            let category_value = "{{ old('category') }}";
+            if (category_value) {
+                if (category_value == {{ ReceiptCategory::CONSUMER->value }}) {
+                    consumer();
+                }
 
-            if($('#giro').is(':checked')) {
-                $('#giroBankDiv').show()
-            } else {
-                $('#giroBankDiv').hide()
+                if (category_value == {{ ReceiptCategory::NON_CONSUMER->value }}) {
+                    nonConsumer();
+                }
             }
 
-            function giroBankDiv(status)
-            {
-                if(status) {
-                    $('#giroBankDiv').show()
+            function selectedCategory(e) {
+                var value = $(e).find(':selected').val();
+
+                if (value == {{ ReceiptCategory::CONSUMER->value }}) {
+                    consumer();
+                }
+
+                if (value == {{ ReceiptCategory::NON_CONSUMER->value }}) {
+                    nonConsumer();
+                }
+            }
+
+            function consumer() {
+                $('#payment_for_label').show();
+                $('#payment_for_consumer').show();
+                $('select[name="payment_for_consumer"]').attr('required', true).attr('disabled', false);
+
+                $('#payment_for_non_consumer').hide();
+                $('input[name="payment_for_non_consumer"]').attr('required', false).attr('disabled', true);
+            }
+
+            function nonConsumer() {
+                $('#payment_for_label').show();
+                $('#payment_for_consumer').val('').hide();
+                $('select[name="payment_for_consumer"]').attr('required', false).attr('disabled', true);
+                $('#deskripsi').hide();
+                $('input[name="payment_for_consumer_description"]').attr('required', false).attr('disabled', true);
+
+                $('#payment_for_non_consumer').show();
+                $('input[name="payment_for_non_consumer"]').attr('required', true).attr('disabled', false);
+            }
+
+            let payment_for_consumer = "{{ old('payment_for_consumer') }}";
+            if (payment_for_consumer) {
+                paymentForConsumer(payment_for_consumer);
+            }
+
+            function selectedPaymentFor(e) {
+                var value = $(e).find(':selected').val();
+                paymentForConsumer(value);
+            }
+
+            function paymentForConsumer(value) {
+                if (value != '{{ AcceptancePaymentForCategory::BOOKING_FEE->value }}') {
+                    $('#deskripsi').show();
+                    $('input[name="payment_for_consumer_description"]').attr('required', true).attr('disabled', false);
                 } else {
-                    $('#giroBankDiv').hide()
+                    $('#deskripsi').hide();
+                    $('input[name="payment_for_consumer_description"]').attr('required', false).attr('disabled', true);
                 }
-            }
-
-            /* Fungsi */
-            function formatRupiah(angka)
-            {
-                var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                    split    = number_string.split(','),
-                    sisa     = split[0].length % 3,
-                    rupiah     = split[0].substr(0, sisa),
-                    ribuan     = split[0].substr(sisa).match(/\d{3}/gi);
-
-                if (ribuan) {
-                    separator = sisa ? '.' : '';
-                    rupiah += separator + ribuan.join('.');
-                }
-
-                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-                return rupiah;
             }
         </script>
     </x-slot>
 </x-app-layout>
+

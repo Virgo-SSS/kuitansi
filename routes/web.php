@@ -27,9 +27,13 @@ Route::middleware([ 'auth', config('jetstream.auth_session')])->group(function (
 
     Route::controller(ReceiptController::class)->prefix('receipt')->group(function () {
         Route::get('/create','create')->name('receipt.create');
-        Route::post('/','store')->name('receipt.store');
-        Route::get('/{receipt}','edit')->name('receipt.edit');
-        Route::put('/{receipt}','update')->name('receipt.update');
+        Route::get('/{type}/{receipt}','edit')->name('receipt.edit');
+
+        Route::post('/payment/create','storePaymentReceipt')->name('receipt.store.payment');
+        Route::put('/payment/edit/{receipt}','updatePaymentReceipt')->name('receipt.update.payment');
+
+        Route::post('/acceptance/create','storeAcceptanceReceipt')->name('receipt.store.acceptance');
+        Route::put('/acceptance/edit/{receipt}','updateAcceptanceReceipt')->name('receipt.update.acceptance');
     });
 
     Route::controller(UserController::class)->prefix('user')->group(function () {

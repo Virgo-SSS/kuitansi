@@ -7,11 +7,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 {{ $styles ?? '' }}
 
+{{-- ICON SVG SOURCES = https://heroicons.com/ --}}
+
 <style>
     [x-cloak] {
         display: none !important;
     }
-    
+
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {

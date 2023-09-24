@@ -10,7 +10,14 @@
     @include('layouts.partials.app_styles')
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/tailwind.output.css', 'resources/js/event.js'])
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js',
+        'resources/css/tailwind.output.css',
+        'resources/js/event.js',
+        'resources/js/currency.js'
+    ])
+
 </head>
 <body class="font-sans antialiased">
 <!-- Page Content -->

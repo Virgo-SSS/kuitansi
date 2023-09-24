@@ -59,7 +59,7 @@ class EditBankTest extends TestCase
     /**
      * @dataProvider editBankRequest
      */
-    public function test_create_bank_validation(string|int $value, string $error): void
+    public function test_edit_bank_validation(string|int $value, string $error): void
     {
         $this->actingAs($user = $this->createUser('user', 'edit bank'));
 

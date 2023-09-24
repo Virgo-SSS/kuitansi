@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('acceptance_receipt_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('acceptance_receipt_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('payment_for_category_id')->constrained('acceptance_payment_for_categories')->cascadeOnDelete();
-            $table->string('payment_for_description');
-            $table->foreignId('payment_method_id')->constrained('payment_methods')->cascadeOnDelete();
+            $table->string('payment_for');
+            $table->string('payment_for_description')->nullable();
+            $table->integer('payment_method');
             $table->unsignedBigInteger('bank_id')->nullable();
-
-            $table->bigInteger('cheque_or_bilyet_number')->nullable();
+            $table->integer('bank_method')->nullable();
+            $table->bigInteger('cek_or_giro_number')->nullable();
             $table->timestamps();
 
             $table->foreign('bank_id')->references('id')->on('banks')->nullOnDelete();

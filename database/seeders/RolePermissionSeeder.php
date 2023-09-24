@@ -40,6 +40,12 @@ class RolePermissionSeeder extends Seeder
                 'edit project',
                 'delete project',
             ],
+            'Bank' => [
+                'view bank page',
+                'create bank',
+                'edit bank',
+                'delete bank',
+            ],
         ];
 
         // Reset cached roles and permissions
@@ -56,9 +62,9 @@ class RolePermissionSeeder extends Seeder
         }
 
         // this can be done as separate statements
-        Role::create(['name' => 'admin']);
+        Role::updateOrCreate(['name' => 'admin']);
 
         // or may be done by chaining
-        Role::create(['name' => 'user'])->givePermissionTo(['create receipt']);
+        Role::updateOrCreate(['name' => 'user'])->givePermissionTo(['create receipt']);
     }
 }
