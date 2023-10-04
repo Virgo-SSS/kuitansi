@@ -17,6 +17,8 @@ use App\Models\AcceptanceReceipt;
 use App\Models\PaymentReceipt;
 use App\Repository\interfaces\AcceptanceReceiptRepositoryInterface;
 use App\Repository\interfaces\PaymentReceiptRepositoryInterface;
+use App\Services\ReceiptService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -85,5 +87,34 @@ class ReceiptController extends Controller
         $action->handle($receipt, $request->validated());
 
         return redirect()->route('dashboard')->with('success', 'Receipt updated successfully');
+    }
+
+    public function print(int $type, int $receipt)
+    {
+        $this->authorize('print receipt');
+
+        if(!in_array($type, [ReceiptType::ACCEPTANCE->value, ReceiptType::PAYMENT->value])) {
+            abort(404);
+        }
+
+        if($type == ReceiptType::ACCEPTANCE->value) {
+            $receipt = app(AcceptanceReceiptRepositoryInterface::class)->findOrFail($receipt);
+        } else {
+            $receipt = app(PaymentReceiptRepositoryInterface::class)->findOrFail($receipt);
+        }
+
+        $service = app(ReceiptService::class);
+
+        $receipt->code = $service->setReceiptCode($receipt);
+        $receipt->nominal_text = $service->setAmountText($receipt->amount);
+        $receipt->amount = number_format($receipt->amount,0,',','.');
+        $receipt->type = $type;
+
+//        return view('receipt.pdf', compact('receipt'));
+
+        $pdf = Pdf::loadView('receipt.pdf', [
+            'receipt' => $receipt,
+        ]);
+        return $pdf->download();
     }
 }

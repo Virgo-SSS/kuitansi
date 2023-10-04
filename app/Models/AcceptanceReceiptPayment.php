@@ -26,4 +26,9 @@ class AcceptanceReceiptPayment extends Model
     {
         return $this->belongsTo(AcceptanceReceipt::class, 'acceptance_receipt_id');
     }
+
+    public function bank(): BelongsTo
+    {
+        return $this->belongsTo(Bank::class, 'bank_id');
+    }
 }

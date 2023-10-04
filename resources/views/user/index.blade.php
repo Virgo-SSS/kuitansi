@@ -43,7 +43,7 @@
                             {{ $user->email }}
                         </td>
                         <td class="px-4 py-3 text-sm">
-                            {{ $user->getRoleNames() ?? '-' }}
+                            {{ $user->getStringRoleNames() ?? '-' }}
                         </td>
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
