@@ -20,7 +20,7 @@ class ProjectFactory extends Factory
             'name' => $this->faker->name,
             'number' => $this->faker->numberBetween(1, 100),
             'block' => $this->faker->numberBetween(1, 100),
-            'type' => $this->faker->randomElement(['house', 'shop', 'office']),
+            'type' => $this->faker->randomElement(['47/48', '50/50', '60/40', '70/30', '80/20', '90/10', '100/0', '0/100', '100/100', '0/0', '20/11', '32/11']),
         ];
     }
 }
