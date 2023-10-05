@@ -6,7 +6,7 @@
         </x-section-title>
 
         <div class="mt-5 md:mt-0 md:col-span-2">
-            <form>
+            <form wire:submit.prevent="updateProfileInformation">
                 <div class="px-4 py-5 bg-white sm:p-6 shadow sm:rounded-md dark:bg-gray-800">
                     <div class="grid grid-cols-6 gap-6">
                         <!-- Name -->
@@ -37,4 +37,11 @@
             </form>
         </div>
     </div>
+    <x-slot name="scripts">
+        <script>
+            Livewire.on('saved', () => {
+                toastr.success('Profile updated successfully!')
+            });
+        </script>
+    </x-slot>
 </div>
