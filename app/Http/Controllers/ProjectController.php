@@ -53,13 +53,4 @@ class ProjectController extends Controller
 
         return redirect()->route('project.index')->with('success', 'Project updated successfully');
     }
-
-    public function destroy(Project $project, DeleteProjectActionInterface $action): RedirectResponse
-    {
-        $this->authorize('delete project');
-
-        $action->handle($project);
-
-        return redirect()->route('project.index')->with('success', 'Project deleted successfully');
-    }
 }

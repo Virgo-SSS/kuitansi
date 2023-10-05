@@ -99,6 +99,7 @@
             </tbody>
         </table>
 
+        {{-- modal delete --}}
         <div
             wire:ignore.self
             x-cloak
@@ -187,6 +188,7 @@
                 </footer>
             </div>
         </div>
+        {{-- end modal delete --}}
     </div>
 </div>
 

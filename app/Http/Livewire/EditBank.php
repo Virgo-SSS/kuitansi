@@ -16,9 +16,9 @@ class EditBank extends ModalComponent
 
     public Bank $bank;
 
-    public function mount(int $bank_id): void
+    public function mount(int $bankId): void
     {
-        $this->bank = Bank::find($bank_id);
+        $this->bank = Bank::find($bankId);
     }
 
     public function render(): View

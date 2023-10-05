@@ -19,6 +19,7 @@ class BankData extends Component
     protected $listeners = [
         'bankCreated' => '$refresh',
         'bankUpdated' => '$refresh',
+        'bankDeleted' => '$refresh',
     ];
 
     public function mount(): void
@@ -43,14 +44,4 @@ class BankData extends Component
             })
             ->get();
     }
-
-    public function deleteBank(Bank $bank, DeleteBankActionInterface $action): void
-    {
-        $this->authorize('delete bank');
-
-        $action->handle($bank);
-
-        $this->toastSuccess('Bank deleted successfully');
-    }
-
 }

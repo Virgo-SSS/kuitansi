@@ -44,7 +44,6 @@ Route::middleware([ 'auth', config('jetstream.auth_session')])->group(function (
         Route::post('/', 'store')->name('user.store');
         Route::get('/{user}/edit', 'edit')->name('user.edit');
         Route::put('/{user}', 'update')->name('user.update');
-        Route::delete('/{user}', 'destroy')->name('user.destroy');
     });
 
     Route::controller(RolePermissionController::class)->prefix('role')->group(function () {
@@ -61,7 +60,6 @@ Route::middleware([ 'auth', config('jetstream.auth_session')])->group(function (
         Route::post('/', 'store')->name('project.store');
         Route::get('/{project}/edit', 'edit')->name('project.edit');
         Route::put('/{project}', 'update')->name('project.update');
-        Route::delete('/{project}', 'destroy')->name('project.destroy');
     });
 
     Route::get('/bank', BankData::class)->name('bank.index');

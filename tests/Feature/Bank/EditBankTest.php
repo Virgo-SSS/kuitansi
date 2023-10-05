@@ -22,7 +22,7 @@ class EditBankTest extends TestCase
     {
         $this->actingAs($user = $this->createUser('user'));
 
-        Livewire::test(EditBank::class, ['bank_id' => $this->createBank()])
+        Livewire::test(EditBank::class, ['bankId' => $this->createBank()])
             ->set('bank.name', 'Bank Name 123')
             ->call('editBank')
             ->assertForbidden();
@@ -40,7 +40,7 @@ class EditBankTest extends TestCase
     {
         $this->actingAs($user = $this->createUser('user', 'edit bank'));
 
-        Livewire::test(EditBank::class, ['bank_id' => $this->createBank()])
+        Livewire::test(EditBank::class, ['bankId' => $this->createBank()])
             ->set('bank.name', 'Bank Name 123')
             ->call('editBank')
             ->assertHasNoErrors();
@@ -63,7 +63,7 @@ class EditBankTest extends TestCase
     {
         $this->actingAs($user = $this->createUser('user', 'edit bank'));
 
-        Livewire::test(EditBank::class, ['bank_id' => $this->createBank()])
+        Livewire::test(EditBank::class, ['bankId' => $this->createBank()])
             ->set('bank.name', $value)
             ->call('editBank')
             ->assertHasErrors(['bank.name' => $error]);

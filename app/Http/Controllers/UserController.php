@@ -70,16 +70,4 @@ class UserController extends Controller
 
         return redirect()->route('user.index')->with('success', 'User updated successfully.');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user, DeleteUserActionInterface $action): RedirectResponse
-    {
-        $this->authorize('delete user');
-
-        $action->handle($user);
-
-        return redirect()->route('user.index')->with('success', 'User deleted successfully.');
-    }
 }
