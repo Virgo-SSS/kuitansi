@@ -182,9 +182,11 @@
                         @php
                             $paymentMethod = $receipt->acceptanceReceiptPayment->payment_method;
                             $paymetMethodDescription =  PaymentMethod::getDescription($paymentMethod);
-
-                            $bankMethod = $receipt->acceptanceReceiptPayment->bank_method;
-                            $bankMethodDescription = BankPaymentMethod::getDescription($bankMethod);
+                            
+                            if($paymentMethod == PaymentMethod::BANK->value) {
+                                $bankMethod = $receipt->acceptanceReceiptPayment->bank_method;
+                                $bankMethodDescription = BankPaymentMethod::getDescription($bankMethod);
+                            }
                         @endphp
                         {{ $paymetMethodDescription }}
                         @if($paymentMethod == PaymentMethod::BANK->value)
