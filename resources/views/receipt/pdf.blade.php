@@ -9,47 +9,12 @@
     <title>Invoice</title>
 
     <style>
-        @media (min-width: 1536px) {
-            .container {
-                max-width: 1536px;
-            }
-        }
-
-        @media (min-width: 1280px) {
-            .container {
-                max-width: 1280px;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .container {
-                max-width: 1024px;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                max-width: 768px;
-            }
-        }
-
-        @media (min-width: 640px) {
-            .container {
-                max-width: 640px;
-            }
-        }
-
         .container {
             width: 100%;
         }
 
         .mt-10 {
             margin-top: 2.5rem;
-        }
-
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .mb-16 {
@@ -97,28 +62,32 @@
         .text-right {
             text-align: right;
         }
-
-        .semi {
-            position: relative;
-            margin-left: 4px;
-        }
-
         .font-semibold {
             font-weight: 600;
         }
 
         .content-wrapper {
-            width: 55rem;
+            width: 70rem;
         }
 
         .line {
             border-top: 1px solid black;
         }
+        .key {
+            width: 200px;
+            float: left;
+            text-align: left;
+            padding-right: 2px;
+        }
+
+        td:empty::after{
+            content: "\00a0";
+        }
     </style>
 </head>
 <body>
 <!-- Content -->
-<div class="container mx-auto mt-10">
+<div class="container">
     <!-- Header -->
     <header class="flex justify-between items-center">
         <!-- Logo dan Informasi Perusahaan -->
@@ -127,8 +96,12 @@
                 <tr>
                     <td>
                         <!-- Logo Perusahaan -->
-{{--                        <img src="{{ asset(config('receipt.logo')) }}" alt="Logo Perusahaan" style="width: 11rem; height: 4rem; object-fit: cover;margin-right: 10px"> --}}
-                        <img src="https://cdn.pixabay.com/photo/2023/09/15/12/47/uaz-8254778_1280.jpg" alt="Logo Perusahaan" style="width: 11rem; height: 4rem; object-fit: cover;margin-right: 10px">
+                        @env('production')
+                            <img src="{{ asset(config('receipt.logo')) }}" alt="Logo Perusahaan" style="width: 11rem; height: 4rem; object-fit: cover;margin-right: 10px">
+                        @endenv
+                        @env(['local', 'staging'])
+                            <img src="https://cdn.pixabay.com/photo/2023/09/15/12/47/uaz-8254778_1280.jpg" alt="Logo Perusahaan" style="width: 11rem; height: 4rem; object-fit: cover;margin-right: 10px">
+                        @endenv
                     </td>
                     <td>
                         <!-- Nama dan Alamat Perusahaan -->
@@ -150,20 +123,21 @@
 
     <!-- Konten Dibungkus dengan Element <div> -->
     <div class="content-wrapper">
-        <table>
+        <div>
+        <table style="width: 90%; border-spacing: 0;">
             <tr>
-                <td><span style='width: 200px;clear: left;float: left;text-align: left;padding-right: 2px;'>Telah Terima dari</span>
-                </td>
-                <td><span class="semi">: {{ $receipt->customer_name }}</span></td>
+                <td class="key">Telah Terima dari</td>
+                <td>:</td>
+                <td>{{ $receipt->customer_name }}</span></td>
             </tr>
             <tr>
-                <td><span style='width: 200px;clear: left;float: left;text-align: left;padding-right: 2px;'>Uang Sejumlah</span>
-                </td>
-                <td><span class="semi">: #{{ strtoupper($receipt->nominal_text) }}#</span></td>
+                <td class="key" style="padding-top: 0px; vertical-align: top">Uang Sejumlah</td>
+                <td style="padding-top: 0px; vertical-align: top">:</td>
+                <td style="padding-top: 0px">#{{ strtoupper($receipt->nominal_text) }}#</td>
             </tr>
             <tr>
-                <td><span style='width: 200px;clear: left;float: left;text-align: left;padding-right: 2px;'>Untuk Pembayaran</span>
-                </td>
+                <td class="key">Untuk Pembayaran</td>
+                <td>:</td>
                 <td>
                     @php
                         if($receipt->type == ReceiptType::ACCEPTANCE->value) {
@@ -175,59 +149,64 @@
                             $paymentFor = $receipt->payment_for;
                         }
                     @endphp
-                    <span class="semi">: {{ $paymentFor }}</span>
-                    <br/>
-                    @if($receipt->category_id == ReceiptCategory::CONSUMER->value)
-                        <span style="margin-left: 11px">Tipe : {{ $receipt->project->type }} | Blok : {{ $receipt->project->block }} |  No : {{ $receipt->project->number }} |  Proyek : {{ $receipt->project->name }}</span>
-                    @endif
+
+                   {{ $paymentFor }}
                 </td>
             </tr>
+            @if($receipt->category_id == ReceiptCategory::CONSUMER->value)
+                <tr>
+                    <td class="key"><p></p></td>
+                    <td><p></p></td>
+                    <td>
+                        Tipe : {{ $receipt->project->type }} | Blok : {{ $receipt->project->block }} |  No : {{ $receipt->project->number }} |  Proyek : {{ $receipt->project->name }}
+                    </td>
+                </tr>
+            @endif
             <tr>
-                <td><span
-                        style='width: 200px;clear: left;float: left;text-align: left;padding-right: 2px;'>Jumlah</span>
-                </td>
-                <td><span class="semi">: Rp. {{ $receipt->amount }}</span> <br/></td>
+                <td class="key">Jumlah</td>
+                <td>:</td>
+                <td>Rp. {{ $receipt->amount }}</td>
             </tr>
             @if($receipt->category_id == ReceiptCategory::NON_CONSUMER->value)
                 <tr>
-                    <td><span
-                            style='width: 200px;clear: left;float: left;text-align: left;padding-right: 2px;'>Proyek</span>
-                    </td>
-                    <td><span class="semi">: {{ $receipt->project->name }}</span></td>
+                    <td class="key">Proyek</td>
+                    <td>:</td>
+                    <td>{{ $receipt->project->name }}</td>
                 </tr>
             @endif
             @if($receipt->type == ReceiptType::ACCEPTANCE->value)
                 <tr>
-                    <td><span style='width: 200px;clear: left;float: left;text-align: left;padding-right: 2px;'>Metode Pembayaran</span>
-                    </td>
+                    <td class="key">Metode Pembayaran</td>
+                    <td>:</td>
                     <td>
-                        <span class="semi">:
-                            @php
-                                $paymentMethod = $receipt->acceptanceReceiptPayment->payment_method;
-                                $paymetMethodDescription =  PaymentMethod::getDescription($paymentMethod);
+                        @php
+                            $paymentMethod = $receipt->acceptanceReceiptPayment->payment_method;
+                            $paymetMethodDescription =  PaymentMethod::getDescription($paymentMethod);
 
-                                $bankMethod = $receipt->acceptanceReceiptPayment->bank_method;
-                                $bankMethodDescription = BankPaymentMethod::getDescription($bankMethod);
-                            @endphp
-                            {{ $paymetMethodDescription }}
-                            @if($paymentMethod == PaymentMethod::BANK->value)
-                                {{ $receipt->acceptanceReceiptPayment->bank->name }}
-                                -
-                                {{ $bankMethodDescription }}
-                                @if($bankMethod != BankPaymentMethod::TRANSFER->value)
-                                    No. {{ $receipt->acceptanceReceiptPayment->cek_or_giro_number }}
-                                @endif
+                            $bankMethod = $receipt->acceptanceReceiptPayment->bank_method;
+                            $bankMethodDescription = BankPaymentMethod::getDescription($bankMethod);
+                        @endphp
+                        {{ $paymetMethodDescription }}
+                        @if($paymentMethod == PaymentMethod::BANK->value)
+                            {{ $receipt->acceptanceReceiptPayment->bank->name }}
+                            -
+                            {{ $bankMethodDescription }}
+                            @if($bankMethod != BankPaymentMethod::TRANSFER->value)
+                                No. {{ $receipt->acceptanceReceiptPayment->cek_or_giro_number }}
                             @endif
-                        </span>
+                        @endif
                     </td>
                 </tr>
             @endif
         </table>
+        </div>
+
     </div>
+
     <footer class="flex justify-between mt-10">
         <table style="width: 100%">
             <tr>
-                <td style="width: 35%">
+                <td style="width: 20%">
                     <!-- Tanda Tangan Kiri -->
                     <div style="margin-top:30px">
                         <div class="font-semibold mt-2 mb-16">DISERAHKAN OLEH :</div>
@@ -239,7 +218,7 @@
                     </div>
                 </td>
                 <td></td>
-                <td style="width: 35%">
+                <td style="width: 20%">
                     <!-- Tanda Tangan Kanan -->
                     <div class="text-right">
                         <span class="block font-semibold mb-2">Batam, {{ $receipt->created_at->isoFormat('D MMMM Y') }}</span>

@@ -110,11 +110,10 @@ class ReceiptController extends Controller
         $receipt->amount = number_format($receipt->amount,0,',','.');
         $receipt->type = $type;
 
-//        return view('receipt.pdf', compact('receipt'));
-
         $pdf = Pdf::loadView('receipt.pdf', [
             'receipt' => $receipt,
         ]);
+        $pdf->setPaper('A4', 'landscape');
         return $pdf->download();
     }
 }
