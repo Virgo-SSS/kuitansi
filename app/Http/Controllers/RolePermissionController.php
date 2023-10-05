@@ -22,8 +22,8 @@ class RolePermissionController extends Controller
         $this->authorize('view role page');
 
         $roles = $this->repository->getRoles();
-
-        return view('role-permission.index', compact('roles'));
+        $permissions = $this->repository->getPermissions();
+        return view('role-permission.index', compact('roles', 'permissions'));
     }
 
     public function create(): View
