@@ -42,7 +42,7 @@ class UpdatePassword extends Component
             'password_confirmation' => '',
         ];
 
-        $this->toast('Password updated successfully.');
+        $this->toastSuccess('Password updated successfully.');
     }
 
     /**

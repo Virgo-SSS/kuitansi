@@ -15,7 +15,7 @@
 
             @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
                 <div class="mt-10 sm:mt-0">
-                    <livewire:update-password></livewire:update-password>
+                    @livewire('update-password')
                 </div>
 
                 <x-section-border />

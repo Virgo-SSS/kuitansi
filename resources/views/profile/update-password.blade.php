@@ -6,14 +6,14 @@
         </x-section-title>
 
         <div class="mt-5 md:mt-0 md:col-span-2">
-            <form>
+            <form wire:submit.prevent="updatePassword">
                 <div class="px-4 py-5 bg-white sm:p-6 shadow sm:rounded-md dark:bg-gray-800">
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6 sm:col-span-4">
                             <x-label for="current_password" value="{{ __('Current Password') }}" />
                             <x-inputs.text id="current_password" type="password" class="mt-1 block w-full" wire:model.defer="state.current_password" autocomplete="current-password" />
                             @error('current_password')
-                            <x-message.error>{{ $message }}</x-message.error>
+                                <x-message.error>{{ $message }}</x-message.error>
                             @enderror
                         </div>
 
@@ -21,7 +21,7 @@
                             <x-label for="password" value="{{ __('New Password') }}" />
                             <x-inputs.text id="password" type="password" class="mt-1 block w-full" wire:model.defer="state.password" autocomplete="new-password" />
                             @error('password')
-                            <x-message.error>{{ $message }}</x-message.error>
+                                <x-message.error>{{ $message }}</x-message.error>
                             @enderror
                         </div>
 
@@ -29,7 +29,7 @@
                             <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
                             <x-inputs.text id="password_confirmation" type="password" class="mt-1 block w-full" wire:model.defer="state.password_confirmation" autocomplete="new-password" />
                             @error('password_confirmation')
-                            <x-message.error>{{ $message }}</x-message.error>
+                                <x-message.error>{{ $message }}</x-message.error>
                             @enderror
                         </div>
                     </div>
