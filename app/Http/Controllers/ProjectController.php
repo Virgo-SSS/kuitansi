@@ -8,6 +8,7 @@ use App\Actions\Project\Interfaces\UpdateProjectActionInterface;
 use App\Http\Requests\Project\StoreProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Models\Project;
+use App\Repository\interfaces\ProjectRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -17,7 +18,7 @@ class ProjectController extends Controller
     {
         $this->authorize('view project page');
 
-        $projects = Project::paginate(30);
+        $projects = app(ProjectRepositoryInterface::class)->paginate(30);
 
         return view('project.index', compact('projects'));
     }
