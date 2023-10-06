@@ -3,5 +3,5 @@
         Dashboard
     </h2>
 
-    <livewire:dashboard-data></livewire:dashboard-data>
+    @livewire('dashboard-data')
 </x-app-layout>

@@ -114,6 +114,7 @@ class ReceiptController extends Controller
             'receipt' => $receipt,
         ]);
         $pdf->setPaper('A4', 'landscape');
-        return $pdf->download();
+
+        return $pdf->download('receipt_' . $receipt->customer_name . '.pdf');
     }
 }
