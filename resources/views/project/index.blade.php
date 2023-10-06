@@ -12,27 +12,32 @@
             </a>
         </div>
     @endcan
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 my-2">
-        <x-inputs.select>
-            @foreach($projects as $project)
-            <option value="">tests</option>
-            @endforeach
-        </x-inputs.select>
-        <x-inputs.select>
-            <option value="">tests</option>
-        </x-inputs.select>
-        <x-inputs.select>
-            <option value="">tests</option>
-        </x-inputs.select>
-        <x-inputs.select>
-            <option value="">tests</option>
-        </x-inputs.select>
-        <div>
-            <x-buttons.small-button>
-                Filter
-            </x-buttons.small-button>
+
+    <form action="" method="GET">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 my-2">
+                <x-inputs.select name="name">
+                    <option value="">Filter By Name</option>
+                    @foreach($allProjects  as $project)
+                        <option value="{{ $project->name }}" @selected($project->name == request('name'))>{{ $project->name }}</option>
+                    @endforeach
+                </x-inputs.select>
+                <x-inputs.text name="block" value="{{ request('block') }}" placeholder="Filter By Block" />
+                <x-inputs.number name="number" value="{{ request('number') }}" placeholder="Filter By Number"/>
+                <x-inputs.text name="type" value="{{ request('type') }}" placeholder="Filter By Type"/>
+
+                <div class="mt-1">
+                    <x-buttons.submit>
+                        Filter
+                    </x-buttons.submit>
+                    <x-buttons.small-button>
+                        <a href="{{ route('project.index') }}">
+                            Clear
+                        </a>
+                    </x-buttons.small-button>
+                </div>
         </div>
-    </div>
+    </form>
+
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         {{ $projects->links('vendor.pagination.custom-tailwind') }}
         <div class="w-full overflow-x-auto">

@@ -10,17 +10,24 @@ use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Models\Project;
 use App\Repository\interfaces\ProjectRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ProjectController extends Controller
 {
-    public function index(): View
+    public function __construct(
+        private readonly ProjectRepositoryInterface $repository
+    ){}
+
+    public function index(Request $request): View
     {
         $this->authorize('view project page');
 
-        $projects = app(ProjectRepositoryInterface::class)->paginate(30);
+        $allProjects = $this->repository->all()->unique('name'); // -> for filter
 
-        return view('project.index', compact('projects'));
+        $projects = $this->repository->paginate($request->all(['name', 'block','type','number']));
+
+        return view('project.index', compact('projects', 'allProjects'));
     }
 
     public function create(): View
