@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Actions\Project\Interfaces\DeleteProjectActionInterface;
 use App\Models\Project;
+use App\Repository\interfaces\ProjectRepositoryInterface;
 use App\Trait\ToastTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
@@ -18,7 +19,7 @@ class DeleteProjectModal extends ModalComponent
 
     public function mount(int $projectId)
     {
-        $this->project = Project::findOrFail($projectId);
+        $this->project = app(ProjectRepositoryInterface::class)->find($projectId);
     }
 
     public function render(): View

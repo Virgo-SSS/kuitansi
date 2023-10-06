@@ -18,4 +18,9 @@ class ProjectRepository implements ProjectRepositoryInterface
     {
         return Project::paginate(30);
     }
+
+    public function find(int $id): Project
+    {
+        return Project::findOrFail($id);
+    }
 }
