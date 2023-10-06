@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Actions\Bank\Interfaces\DeleteBankActionInterface;
 use App\Models\Bank;
+use App\Repository\interfaces\BankRepositoryInterface;
 use App\Trait\ToastTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
@@ -19,7 +20,7 @@ class DeleteBankModal extends ModalComponent
 
     public function mount(int $bankId): void
     {
-        $this->bank = Bank::findOrFail($bankId);
+        $this->bank = app(BankRepositoryInterface::class)->find($bankId);
     }
 
     public function render(): View

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Enums\BankPaymentMethod;
 use App\Enums\PaymentMethod;
 use App\Models\Bank;
+use App\Repository\interfaces\BankRepositoryInterface;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -23,8 +24,8 @@ class PaymentMethodDependentDropdown extends Component
     public function render(): View
     {
         return view('livewire.payment-method-dependent-dropdown',[
-            'paymentMethods' =>PaymentMethod::cases(),
-            'banks' =>  Bank::all(),
+            'paymentMethods' => PaymentMethod::cases(),
+            'banks' =>  app(BankRepositoryInterface::class)->all(),
             'bankPaymentMethods' => BankPaymentMethod::cases(),
         ]);
     }

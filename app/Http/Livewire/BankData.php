@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Bank;
+use App\Repository\interfaces\BankRepositoryInterface;
 use App\Trait\ToastTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -43,10 +43,6 @@ class BankData extends Component
 
     private function getBankData(): LengthAwarePaginator
     {
-        return Bank::query()
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', "%{$this->search}%");
-            })
-            ->paginate(20);
+        return app(BankRepositoryInterface::class)->all($this->search);
     }
 }

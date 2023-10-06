@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Actions\Bank\Interfaces\EditBankActionInterface;
 use App\Models\Bank;
+use App\Repository\interfaces\BankRepositoryInterface;
 use App\Trait\ToastTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +19,7 @@ class EditBank extends ModalComponent
 
     public function mount(int $bankId): void
     {
-        $this->bank = Bank::find($bankId);
+        $this->bank = app(BankRepositoryInterface::class)->find($bankId);
     }
 
     public function render(): View

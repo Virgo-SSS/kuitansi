@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Repository\AcceptanceReceiptRepository;
+use App\Repository\BankRepository;
 use App\Repository\interfaces\AcceptanceReceiptRepositoryInterface;
+use App\Repository\interfaces\BankRepositoryInterface;
 use App\Repository\interfaces\PaymentReceiptRepositoryInterface;
 use App\Repository\interfaces\ProjectRepositoryInterface;
 use App\Repository\interfaces\RolePermissionRepositoryInterface;
@@ -23,6 +25,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProjectRepositoryInterface::class, ProjectRepository::class);
         $this->app->bind(AcceptanceReceiptRepositoryInterface::class, AcceptanceReceiptRepository::class);
         $this->app->bind(PaymentReceiptRepositoryInterface::class, PaymentReceiptRepository::class);
+        $this->app->bind(BankRepositoryInterface::class, BankRepository::class);
     }
 
     /**
