@@ -9,9 +9,11 @@ use App\Repository\interfaces\BankRepositoryInterface;
 use App\Repository\interfaces\PaymentReceiptRepositoryInterface;
 use App\Repository\interfaces\ProjectRepositoryInterface;
 use App\Repository\interfaces\RolePermissionRepositoryInterface;
+use App\Repository\interfaces\UserRepositoryInterface;
 use App\Repository\PaymentReceiptRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\RolePermissionRepository;
+use App\Repository\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -26,6 +28,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AcceptanceReceiptRepositoryInterface::class, AcceptanceReceiptRepository::class);
         $this->app->bind(PaymentReceiptRepositoryInterface::class, PaymentReceiptRepository::class);
         $this->app->bind(BankRepositoryInterface::class, BankRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
     /**

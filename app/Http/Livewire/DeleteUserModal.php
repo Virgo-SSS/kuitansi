@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Actions\User\Interfaces\DeleteUserActionInterface;
 use App\Models\User;
+use App\Repository\interfaces\UserRepositoryInterface;
 use App\Trait\ToastTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class DeleteUserModal extends ModalComponent
 
     public function mount(int $userId)
     {
-        $this->user = User::findOrFail($userId);
+        $this->user = app(UserRepositoryInterface::class)->find($userId);
     }
 
     public function render(): View

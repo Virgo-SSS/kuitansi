@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\User\DeleteUser;
-use App\Actions\User\Interfaces\DeleteUserActionInterface;
 use App\Actions\User\Interfaces\UpdateUserActionInterface;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Repository\interfaces\RolePermissionRepositoryInterface;
+use App\Repository\interfaces\UserRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -22,7 +21,7 @@ class UserController extends Controller
     {
         $this->authorize('view user page');
 
-        $users = User::paginate(10);
+        $users = app(UserRepositoryInterface::class)->paginate();
 
         return view('user.index', compact('users'));
     }
