@@ -17,7 +17,7 @@ class ProjectController extends Controller
     {
         $this->authorize('view project page');
 
-        $projects = Project::paginate(10);
+        $projects = Project::paginate(30);
 
         return view('project.index', compact('projects'));
     }

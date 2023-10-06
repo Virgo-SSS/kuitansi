@@ -12,8 +12,29 @@
             </a>
         </div>
     @endcan
-
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 my-2">
+        <x-inputs.select>
+            @foreach($projects as $project)
+            <option value="">tests</option>
+            @endforeach
+        </x-inputs.select>
+        <x-inputs.select>
+            <option value="">tests</option>
+        </x-inputs.select>
+        <x-inputs.select>
+            <option value="">tests</option>
+        </x-inputs.select>
+        <x-inputs.select>
+            <option value="">tests</option>
+        </x-inputs.select>
+        <div>
+            <x-buttons.small-button>
+                Filter
+            </x-buttons.small-button>
+        </div>
+    </div>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
+        {{ $projects->links('vendor.pagination.custom-tailwind') }}
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
                 <thead>

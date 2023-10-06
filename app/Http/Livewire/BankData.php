@@ -2,17 +2,17 @@
 
 namespace App\Http\Livewire;
 
-use App\Actions\Bank\Interfaces\DeleteBankActionInterface;
 use App\Models\Bank;
 use App\Trait\ToastTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class BankData extends Component
 {
-    use ToastTrait, AuthorizesRequests;
+    use ToastTrait, AuthorizesRequests, withPagination;
 
     public string $search = '';
 
@@ -36,12 +36,17 @@ class BankData extends Component
         ]);
     }
 
-    private function getBankData(): Collection
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    private function getBankData(): LengthAwarePaginator
     {
         return Bank::query()
             ->when($this->search, function ($query) {
                 $query->where('name', 'like', "%{$this->search}%");
             })
-            ->get();
+            ->paginate(20);
     }
 }
