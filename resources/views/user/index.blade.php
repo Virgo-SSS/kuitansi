@@ -12,7 +12,29 @@
             </a>
         </div>
     @endcan
+    <form action="" method="GET">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 my-2">
+            <x-inputs.select name="role">
+                <option value="">Filter By Role</option>
+                @foreach($roles as $role)
+                    <option value="{{ $role->id }}" @selected(request('role') == $role->id) >{{ ucfirst($role->name) }}</option>
+                @endforeach
+            </x-inputs.select>
+            <x-inputs.text name="uuid" value="{{ request('uuid') }}" placeholder="Filter By UUID" />
+            <x-inputs.text name="name" value="{{ request('name') }}" placeholder="Filter By Name"/>
 
+            <div class="mt-1">
+                <x-buttons.submit>
+                    Filter
+                </x-buttons.submit>
+                <a href="{{ route('user.index') }}">
+                    <x-buttons.small-button>
+                        Clear
+                    </x-buttons.small-button>
+                </a>
+            </div>
+        </div>
+    </form>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
@@ -43,7 +65,17 @@
                                 {{ $user->email }}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ $user->getStringRoleNames() ?? '-' }}
+                                @if($user->roles->isNotEmpty())
+                                    @foreach($user->roles as $role)
+                                        @if($loop->first)
+                                            {{ ucfirst($role->name) }}
+                                        @else
+                                            , {{ ucfirst($role->name) }}
+                                        @endif
+                                    @endforeach
+                                @else
+                                    No Role
+                                @endif
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex gap-1">

@@ -23,9 +23,9 @@ class RolePermissionRepository implements RolePermissionRepositoryInterface
 
     public function getRoles(): Collection
     {
-       return Role::with('permissions')
-        ->where('name', '!=', 'admin')
-        ->get();
+       return Cache::remember('roles_all', 60 * 60 * 24 * 30, function () {
+           return Role::query()->with('permissions')->get();
+       });
     }
 
     public function getRoleById(string $name): Role

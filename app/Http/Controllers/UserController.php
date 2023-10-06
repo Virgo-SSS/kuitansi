@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Repository\interfaces\RolePermissionRepositoryInterface;
 use App\Repository\interfaces\UserRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 
@@ -17,13 +18,14 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         $this->authorize('view user page');
 
-        $users = app(UserRepositoryInterface::class)->paginate();
+        $users = app(UserRepositoryInterface::class)->paginate($request->all(['uuid', 'name', 'role']));
+        $roles = app(RolePermissionRepositoryInterface::class)->getRoles();
 
-        return view('user.index', compact('users'));
+        return view('user.index', compact('users', 'roles'));
     }
 
     /**

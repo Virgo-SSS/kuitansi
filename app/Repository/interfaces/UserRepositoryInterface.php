@@ -10,7 +10,7 @@ interface UserRepositoryInterface
 {
     public function all(): Collection;
 
-    public function paginate(int $perPage = 10): LengthAwarePaginator;
+    public function paginate(array $search = [],int $perPage = 10): LengthAwarePaginator;
 
     public function find(int $id): User;
 }
