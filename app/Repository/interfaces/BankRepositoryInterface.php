@@ -10,7 +10,7 @@ interface BankRepositoryInterface
 {
     public function all(string $search = ''): Collection;
 
-    public function paginate(int $perPage = 30, string $search = ''): LengthAwarePaginator;
+    public function paginate(string $search = '', int $perPage = 30): LengthAwarePaginator;
 
     public function find(int $id): Bank;
 }

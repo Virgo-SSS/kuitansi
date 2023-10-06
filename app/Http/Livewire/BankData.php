@@ -43,6 +43,6 @@ class BankData extends Component
 
     private function getBankData(): LengthAwarePaginator
     {
-        return app(BankRepositoryInterface::class)->all($this->search);
+        return app(BankRepositoryInterface::class)->paginate($this->search);
     }
 }

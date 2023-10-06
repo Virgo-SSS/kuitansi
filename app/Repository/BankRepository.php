@@ -18,7 +18,7 @@ class BankRepository implements BankRepositoryInterface
             ->get();
     }
 
-    public function paginate(int $perPage = 30, string $search = ''): LengthAwarePaginator
+    public function paginate(string $search = '', int $perPage = 30): LengthAwarePaginator
     {
         return Bank::query()
             ->when($search, function ($query) use ($search) {
