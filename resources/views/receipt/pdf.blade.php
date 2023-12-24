@@ -108,13 +108,15 @@
                         <div>
                             <h1 class="font-bold text-lg">{{ config('receipt.company_name') }}</h1>
                             <p>{{ config('receipt.company_address') }}</p>
+                            <p>{{ config('receipt.company_telp') }}</p>
+
                         </div>
                     </td>
                 </tr>
             </table>
         </div>
     </header>
-
+    <hr>
     <!-- Judul Konten -->
     <h1 class="text-2xl font-bold mb-6 text-center">Kwitansi {{ ReceiptType::getDescription($receipt->type) }}</h1>
 
@@ -182,7 +184,7 @@
                         @php
                             $paymentMethod = $receipt->acceptanceReceiptPayment->payment_method;
                             $paymetMethodDescription =  PaymentMethod::getDescription($paymentMethod);
-                            
+
                             if($paymentMethod == PaymentMethod::BANK->value) {
                                 $bankMethod = $receipt->acceptanceReceiptPayment->bank_method;
                                 $bankMethodDescription = BankPaymentMethod::getDescription($bankMethod);

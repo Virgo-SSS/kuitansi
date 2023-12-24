@@ -1,4 +1,5 @@
 <div class="w-full overflow-hidden rounded-lg shadow-xs">
+    {{ $receipts->links('vendor.livewire.tailwind') }}
     <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
             <thead>
@@ -99,6 +100,9 @@
             </tbody>
         </table>
 
+    </div>
+    {{ $receipts->links('vendor.livewire.tailwind') }}
+
         {{-- modal delete --}}
         <div
             wire:ignore.self
@@ -189,6 +193,5 @@
             </div>
         </div>
         {{-- end modal delete --}}
-    </div>
 </div>
 

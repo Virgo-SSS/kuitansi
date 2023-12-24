@@ -7,7 +7,7 @@ use App\Models\PaymentReceipt;
 
 class ReceiptService
 {
-    public function setReceiptCode(AcceptanceReceipt|PaymentReceipt $receipt): string
+    public function setReceiptCode(AcceptanceReceipt|PaymentReceipt $receipt, string $pemisah = '/'): string
     {
         if($receipt instanceof AcceptanceReceipt) {
             $receiptCode = config('receipt.acceptance_receipt_code');
@@ -19,7 +19,7 @@ class ReceiptService
 
         $romanService = app(RomanService::class);
         $id = sprintf("%03s", $receipt->id);
-        $code = $id . '/' . $receiptCode . '/' . $romanService->integerToRoman($receipt->created_at->format('m')) . '/' . $receipt->created_at->format('Y');
+        $code = $id . $pemisah . $receiptCode . $pemisah . $romanService->integerToRoman($receipt->created_at->format('m')) . $pemisah . $receipt->created_at->format('Y');
 
         return $code;
     }

@@ -1,10 +1,10 @@
 <div>
     @if ($paginator->hasPages())
-        @php(isset($this->numberOfPaginatorsRendered[$paginator->getPageName()]) 
-        ? $this->numberOfPaginatorsRendered[$paginator->getPageName()]++ 
+        @php(isset($this->numberOfPaginatorsRendered[$paginator->getPageName()])
+        ? $this->numberOfPaginatorsRendered[$paginator->getPageName()]++
         : $this->numberOfPaginatorsRendered[$paginator->getPageName()] = 1)
 
-        
+
         <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
             <span class="flex items-center col-span-3">
                 {!! __('Showing') !!}
@@ -35,7 +35,7 @@
                                     </button>
                                 </span>
                             @else
-                                <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.after" rel="prev" 
+                                <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.after" rel="prev"
                                     class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="{{ __('pagination.previous') }}">
                                     <svg aria-hidden="true" class="w-4 h-4 fill-current" viewBox="0 0 20 20">
                                         <path
@@ -70,7 +70,7 @@
 
                                             </span>
                                         @else
-                                            <button type="button" wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')" 
+                                            <button type="button" wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')"
                                                 aria-label="{{ __('Go to page :page', ['page' => $page]) }}" class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                                                 {{ $page }}
                                             </button>
@@ -84,8 +84,8 @@
                         <li>
                             {{-- Next Page Link --}}
                             @if($paginator->hasMorePages())
-                                <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" 
-                                    dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.after" rel="next" 
+                                <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')"
+                                    dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.after" rel="next"
                                     aria-label="{{ __('pagination.next') }}" class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />

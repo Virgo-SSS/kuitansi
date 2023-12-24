@@ -105,7 +105,7 @@ class ReceiptController extends Controller
 
         $service = app(ReceiptService::class);
 
-        $receipt->code = $service->setReceiptCode($receipt);
+        $receipt->code = $service->setReceiptCode($receipt, '.');
         $receipt->nominal_text = $service->setAmountText($receipt->amount);
         $receipt->amount = number_format($receipt->amount,0,',','.');
         $receipt->type = $type;
@@ -113,8 +113,9 @@ class ReceiptController extends Controller
         $pdf = Pdf::loadView('receipt.pdf', [
             'receipt' => $receipt,
         ]);
-        $pdf->setPaper('A4', 'landscape');
 
-        return $pdf->download('receipt_' . $receipt->customer_name . '.pdf');
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->download($receipt->code . '.pdf');
     }
 }

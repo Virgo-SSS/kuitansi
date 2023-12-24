@@ -4,6 +4,7 @@ namespace Tests\Feature\Receipt;
 
 use App\Enums\ReceiptType;
 use App\Models\PaymentReceipt;
+use App\Services\ReceiptService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -32,14 +33,14 @@ class PrintReceiptTest extends TestCase
     public function test_user_can_download_receipt_if_have_permission(): void
     {
         $receipt = PaymentReceipt::factory()->create();
-
         $this->actingAs($user = $this->createUser('user', ['print receipt']));
 
         $response = $this->get(route('receipt.print', ['type' => ReceiptType::PAYMENT->value, 'receipt' => $receipt->id]));
         $response->assertOk();
-
         $this->assertNotEmpty($response->getContent());
         $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename="receipt_'.$receipt->customer_name.'.pdf'.'"', $response->headers->get('Content-Disposition'));
+
+        $filename = app(ReceiptService::class)->setReceiptCode($receipt, '.');
+        $this->assertEquals('attachment; filename="' . $filename . '.pdf'.'"', $response->headers->get('Content-Disposition'));
     }
 }

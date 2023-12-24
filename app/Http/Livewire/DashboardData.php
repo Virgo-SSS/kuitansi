@@ -8,8 +8,10 @@ use App\Models\AcceptanceReceipt;
 use App\Models\PaymentReceipt;
 use App\Repository\interfaces\AcceptanceReceiptRepositoryInterface;
 use App\Repository\interfaces\PaymentReceiptRepositoryInterface;
+use App\Services\PaginatorService;
 use App\Services\ReceiptService;
 use App\Trait\ToastTrait;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -23,10 +25,11 @@ class DashboardData extends Component
     public function render(): View
     {
         $service = app(ReceiptService::class);
-        $acceptanceReceipt = app(AcceptanceReceiptRepositoryInterface::class)->all();
-        $paymentReceipt = app(PaymentReceiptRepositoryInterface::class)->all();
-
-        $receipts = $acceptanceReceipt->merge($paymentReceipt);
+        $acceptanceReceipt = app(AcceptanceReceiptRepositoryInterface::class)->paginate(15); // 20
+        $paymentReceipt = app(PaymentReceiptRepositoryInterface::class)->paginate(15); // 20
+        // total data is 40 (20 + 20)
+        $receipts = app(PaginatorService::class)->merge([$acceptanceReceipt, $paymentReceipt])->get();
+//        dd($receipts);
         $receipts->each(function (AcceptanceReceipt|PaymentReceipt $receipt) use ($service) {
             $receipt->code = $service->setReceiptCode($receipt);
             $receipt->amount = number_format($receipt->amount);
